@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     @foreach($trs as $dt)
-                    No Transaksi : <b>TRS-{{$dt->id_sewa}}</b>
+                        No Transaksi : <b>TRS-{{$dt->id_sewa}}</b>
                     @endforeach 
                 </div>
             <div class="card-body">
