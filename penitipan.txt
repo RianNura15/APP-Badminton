@@ -1,0 +1,34 @@
+<!-- <section id="services" class="hoc container clear" style="margin-top: -200px;">
+    <ul class="nospace group elements elements-three">
+      @foreach($data as $dt)
+      @if($dt->keterangan=='Aktif' || $dt->keterangan=='Mulai')
+      <li class="one_third">
+        <article><a href="#"></a>
+          <h6 class="heading">{{$dt->data_sewa->nama_lap}}</h6>
+          <p style="margin-bottom: 10px;">{{ \Carbon\Carbon::parse($dt->tanggalmain)->format('d F Y') }}</p>
+          <p>
+            {{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }}
+          </p>
+          @if($dt->keterangan=='Mulai')
+          <p style="margin-top: 10px; color: green;"><b>Sedang Berlangsung</b></p>
+          @endif
+        </article>
+      </li>
+      @endif
+      @endforeach
+    </ul>
+  </section> -->
+
+  
+	// public function cek_boking($id_lapangan, Request $request)
+	// {	
+	// 	$search = $request['search'] ?? "";
+	// 	if ($search != "") {
+	// 		$data = Jadwal::with('data_sewa')->where('data_jadwal.id_lap',$id_lapangan)->where('tanggalmain','LIKE', "%$search%")->latest()->get();
+	// 		$jam = Jam::with('nama_lapangan')->where('jam.lapangan_id',$id_lapangan)->get();
+	// 	} else {
+	// 		$data=Jadwal::with('data_sewa')->where('data_jadwal.id_lap',$id_lapangan)->latest()->get();
+	// 		$jam = Jam::with('nama_lapangan')->where('jam.lapangan_id',$id_lapangan)->get();
+	// 	}
+	// 	return view('halaman/cek',['data'=>$data,'search'=>$search, 'jam'=>$jam]);
+	// }

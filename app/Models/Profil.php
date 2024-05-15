@@ -9,6 +9,6 @@ class Profil extends Model
 {
     use HasFactory;
 
-    protected $table="profil";
+    protected $table = "profil";
     protected $guarded = ['id_profil'];
 }

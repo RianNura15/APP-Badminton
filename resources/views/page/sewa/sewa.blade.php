@@ -20,7 +20,7 @@
                             <th>Nama Lapangan</th>
                             <th>Nama PB/Klub</th>
                             <th>Tanggal</th>
-                            <th>Bukti Transfer</th>
+                            <th>Pembayaran</th>
                             <th>Jatuh Tempo</th>
                             <th>Keterangan</th>
                             <th>Total</th>
@@ -29,6 +29,7 @@
                     </thead>
                     <tbody>
                         <?php $no=1; ?>
+                        <?php $today = date('Y-m-d'); ?>
                         @foreach($data as $dt)
                         <tr>
                             <td>{{$no}}. </td>
@@ -36,16 +37,16 @@
                             <td>{{$dt->user->name}}</td>
                             <td>{{$dt->nama_lapangan->nama_lap}}</td>
                             <td>{{$dt->namapb}}</td>
-                            <td>{{$dt->tanggal}}</td>
+                            <td>{{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</td>
                             <td>
-                                @if( $dt->bukti_tf=='-')
-                                <span class="badge bg-danger">Belum Upload <br>Bukti Transfer</span>
+                                @if($dt->bukti_tf=='Belum di Bayar')
+                                <span class="badge bg-warning">{{$dt->bukti_tf}}</span>
                                 @endif
-                                @if($dt->bukti_tf!=="-" && $dt->isadmin=='0')
-                                <img src="{{asset('upload')}}/{{$dt->bukti_tf}}" width="80">
+                                @if($dt->bukti_tf=='Terbayar')
+                                <span class="badge bg-primary">{{$dt->bukti_tf}}</span>
                                 @endif
-                                @if($dt->bukti_tf==NULL && $dt->isadmin=='1')
-                                <span class="badge bg-primary">-</span>
+                                @if($dt->bukti_tf=='DP Terbayar')
+                                <span class="badge bg-info">{{$dt->bukti_tf}}</span>
                                 @endif
                             </td>
                             <td>
@@ -55,64 +56,54 @@
                                 @if($dt->keterangan=='Expired')
                                 <span class="badge bg-danger">Sudah Expired</span>
                                 @endif
-                                @if($dt->keterangan=='Sedang di Cek')
-                                <span class="badge bg-warning">Menunggu</span>
+                                @if($dt->keterangan=='Clear')
+                                <span class="badge bg-primary">{{$dt->keterangan}}</span>
                                 @endif
-                                @if($dt->keterangan=='Aktif' || $dt->keterangan=='Selesai' || $dt->keterangan=='Mulai')
-                                <span class="badge bg-primary">Clear</span>
+                                @if($dt->keterangan=='DP')
+                                <span class="badge bg-info">{{$dt->keterangan}}</span>
                                 @endif
-                                @if($dt->keterangan=='Di Batalkan')
-                                <span class="badge bg-danger">-</span>
+                                @if($dt->keterangan=='Di Batalkan Pelanggan' || $dt->keterangan=='Di Batalkan Admin')
+                                <span class="badge bg-danger">X</span>
                                 @endif
                             </td>
                             <td>
-                                @if($dt->keterangan=='Sedang di Cek')
-                                <span class="badge bg-warning">Pending</span>
-                                @endif
-                                @if($dt->keterangan=='Aktif')
+                                @if($dt->keterangan=='Clear')
                                 <span class="badge bg-primary">{{$dt->keterangan}}</span>
                                 @endif
-                                @if($dt->keterangan=='Selesai')
-                                <span class="badge bg-success">{{$dt->keterangan}}</span>
+                                @if($dt->keterangan=='-')
+                                <span class="badge bg-warning">Menunggu Pembayaran</span>
                                 @endif
-                                @if($dt->keterangan=='Di Batalkan')
+                                @if($dt->keterangan=='DP')
+                                <span class="badge bg-info">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='Di Batalkan Pelanggan' || $dt->keterangan=='Di Batalkan Admin')
                                 <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                 @endif
                                 @if($dt->keterangan=='Expired')
                                 <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                 @endif
-                                 @if($dt->keterangan=='Mulai')
-                                <span class="badge bg-info">{{$dt->keterangan}}</span>
-                                @endif
                             </td>
-                        <!-- <td>
-                            @if($dt->tempo==date('Y-m-d') AND date('H:i:s')>=$dt->jam_selesai AND $dt->bukti_tf=="-")
-                            <span class="badge bg-danger">Di Batalkan <br>Data akan di Hapus</span>
-                            @endif
-                            @if($dt->tempo==date('Y-m-d') AND date('H:i:s')>=$dt->jam_selesai AND $dt->bukti_tf!=="-")
-                            <span class="badge bg-primary">{{$dt->keterangan}}</span>
-                            @endif
-
-                            @if($dt->tempo!==date('Y-m-d') AND date('H:i:s')>=$dt->jam_selesai AND $dt->bukti_tf=="-")
-                            <span class="badge bg-primary">Berlangsung</span>
-                            @endif
-                        </td> -->
                         <td>
                             Rp. {{number_format($dt->total,0,",",".")}}
                         </td>
                         <td align="center">
-                            <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id_sewa}}" class="btn btn-sm btn-primary">
+                            <!-- <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id_sewa}}" class="btn btn-sm btn-primary">
                                 <i class="dripicons dripicons-disc"></i>
-                            </button>
+                            </button> -->
                             <a href="{{route('cek_data',$dt->id_sewa)}}" class="btn btn-sm btn-success">
                                 <i class="dripicons dripicons-document-edit"></i>
                             </a>
-                            @if($dt->keterangan=='Di Batalkan' || $dt->keterangan=='Expired')
+                            <!-- @if($dt->keterangan=='Di Batalkan' || $dt->keterangan=='Expired')
                             <a href="{{route('deletesewa',$dt->id_sewa)}}" onclick="return confirm('Yakin hapus data sewa kode TRS-{{$dt->id_sewa}}?')" class="btn btn-sm btn-danger">
                                 <i class="dripicons dripicons-trash"></i>
                             </a>
+                            @endif -->
+                            @if($dt->tanggal < $today && $dt->keterangan == '-' && $dt->bukti_tf == 'Belum di Bayar')
+                            <a href="{{route('expired',$dt->id_sewa)}}" onclick="return confirm('Yakin data sewa kode TRS-{{$dt->id_sewa}} sudah expired?')" class="btn btn-sm btn-danger">
+                                ✖
+                            </a>
                             @endif
-                            @if($dt->keterangan=="Aktif" || $dt->keterangan=="Mulai")
+                            @if($dt->keterangan=="Clear")
                             <a href="{{route('nota',$dt->id_sewa)}}" target="_blank" class="btn btn-sm btn-warning">
                                 <i class="dripicons dripicons-direction"></i>
                             </a>
@@ -144,10 +135,10 @@
                                 <div class="col-3">Lapangan </div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> {{$dt->nama_lapangan->nama_lap}} - {{$dt->nama_lapangan->nama_jenis}} </div>
-                                <div class="col-3">Harga </div>
+                                <div class="col-3">Total </div>
                                 <div class="col-1">: </div>
-                                <div class="col-8"> Rp {{number_format($dt->hargasewa,0,",",".")}} </div>
-                                <div class="col-3">Tanggal </div>
+                                <div class="col-8"> Rp {{number_format($dt->total,0,",",".")}} </div>
+                                <div class="col-3">Tanggal Transaksi</div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> {{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }} </div>
                                 <div class="col-3">Konfirmasi </div>
@@ -166,7 +157,7 @@
                                     @if($dt->keterangan=="-")
                                     <span class="badge bg-danger">Belum Upload Bukti Transfer</span>
                                     @endif
-                                    @if($dt->keterangan=="Aktif")
+                                    @if($dt->keterangan=="Clear")
                                     <span class="badge bg-primary">
                                         {{$dt->keterangan}}
                                     </span>

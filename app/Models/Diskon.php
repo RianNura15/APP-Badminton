@@ -9,6 +9,6 @@ class Diskon extends Model
 {
     use HasFactory;
 
-    protected $table="diskons";
+    protected $table = "diskons";
     protected $guarded = ['id'];
 }

@@ -24,7 +24,6 @@
                             <th>Jam Main</th>
                             <th>Total Jam</th>
                             <th>Keterangan</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,8 +51,8 @@
                                 @if($dt->keterangan=='Aktif' || $dt->keterangan=='Selesai' || $dt->keterangan=='Mulai')
                                 <span class="badge bg-primary">Clear</span>
                                 @endif
-                                @if($dt->keterangan=='Di Batalkan')
-                                <span class="badge bg-danger">---</span>
+                                @if($dt->keterangan=='Di Batalkan Pelanggan' || $dt->keterangan=='Di Batalkan Admin')
+                                <span class="badge bg-danger">X</span>
                                 @endif
                                 @if($dt->keterangan=='Pending')
                                 <span class="badge bg-warning">---</span>
@@ -72,7 +71,7 @@
                                 @if($dt->keterangan=='Selesai')
                                 <span class="badge bg-success">{{$dt->keterangan}}</span>
                                 @endif
-                                @if($dt->keterangan=='Di Batalkan')
+                                @if($dt->keterangan=='Di Batalkan Admin' || $dt->keterangan=='Di Batalkan Pelanggan')
                                 <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                 @endif
                                 @if($dt->keterangan=='Expired')
@@ -82,11 +81,6 @@
                                 <span class="badge bg-info">{{$dt->keterangan}}</span>
                                 @endif
                             </td>
-                            <td align="center">
-                                <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id_sewa}}" class="btn btn-sm btn-primary">
-                                    <i class="dripicons dripicons-disc"></i>
-                                </button>
-                        </td>
                     </tr>
                     <?php $no++ ?>
                     @endforeach

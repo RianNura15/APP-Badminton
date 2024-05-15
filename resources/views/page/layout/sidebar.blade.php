@@ -44,9 +44,9 @@ $profil=DB::table('profil')->get();
                         <li class="submenu-item ">
                             <a href="{{route('sewa')}}">Data Sewa</a>
                         </li>
-                        <li class="submenu-item ">
+                        <!-- <li class="submenu-item ">
                             <a href="{{route('sewapb')}}">Data Sewa PB</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 <li class="sidebar-item  ">
@@ -61,30 +61,30 @@ $profil=DB::table('profil')->get();
                         <span>Laporan Sewa</span>
                     </a>
                 </li>
-                <li class="sidebar-item  ">
+                <!-- <li class="sidebar-item  ">
                     <a href="{{route('tambahsewa')}}" class='sidebar-link'>
                         <i class="dripicons dripicons-plus"></i>
                         <span>Tambah Sewa PB</span>
                     </a>
-                </li>
-                <li class="sidebar-item  ">
+                </li> -->
+                <!-- <li class="sidebar-item  ">
                     <a href="{{route('tambahkegiatan')}}" class='sidebar-link'>
                         <i class="dripicons dripicons-plus"></i>
                         <span>Tambah Kegiatan</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li class="sidebar-item  ">
                     <a href="{{route('tambahsewa')}}" class='sidebar-link'>
                         <i class="dripicons dripicons-plus"></i>
                         <span>Tambah Sewa</span>
                     </a>
                 </li> -->
-                <!-- <li class="sidebar-item  ">
+                <li class="sidebar-item  ">
                     <a href="{{route('diskon')}}" class='sidebar-link'>
                         <i class="bi bi-wallet"></i>
-                        <span>Diskon</span>
+                        <span>Diskon Member</span>
                     </a>
-                </li> -->
+                </li>
 
                 <li class="sidebar-title">Data Penunjang</li>
 
@@ -121,11 +121,11 @@ $profil=DB::table('profil')->get();
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-wallet"></i>
-                        <span>Kode Pembayaran</span>
+                        <span>Metode Pembayaran</span>
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item ">
-                            <a href="{{route('payment')}}">No Rekening</a>
+                            <a href="{{route('payment')}}">Data Metode Pembayaran</a>
                         </li>
                     </ul>
                 </li>
@@ -185,6 +185,12 @@ $profil=DB::table('profil')->get();
                     <a href="{{route('data_sewa')}}" class='sidebar-link'>
                         <i class="dripicons dripicons-suitcase"></i>
                         <span>Riwayat Sewa</span>
+                    </a>
+                </li>
+                <li class="sidebar-item  ">
+                    <a href="{{route('logoutpelanggan')}}" class='sidebar-link'>
+                        <i class="dripicons dripicons-exit"></i>
+                        <span>Logout</span>
                     </a>
                 </li>
                 @endif

@@ -9,7 +9,7 @@ class Jenis_lapangan extends Model
 {
     use HasFactory;
 
-    protected $table="jenis_lapangan";
+    protected $table = "jenis_lapangan";
     protected $guarded = ['id_jenis'];
 
     public function lapangan()

@@ -9,7 +9,7 @@ class Datauser extends Model
 {
     use HasFactory;
 
-    protected $table="datauser";
+    protected $table = "datauser";
     protected $guarded = ['id_datauser'];
 
     public function user()

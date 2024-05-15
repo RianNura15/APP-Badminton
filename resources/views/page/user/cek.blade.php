@@ -21,11 +21,17 @@
                                             <h4 class="card-title">Nama : {{$dt->name}}</h4>
                                             <h4 class="card-title">Email : {{$dt->email}}</h4>
                                             <h4 class="card-title">Level : {{$dt->level}}</h4>
+                                            @if($dt->member == '0')
+                                            <h4 class="card-title">Member : <span class="badge bg-danger">Bukan Member</span></h4>
+                                            @endif
+                                            @if($dt->member == '1')
+                                            <h4 class="card-title">Level : <span class="badge bg-success">Member</span></h4>
+                                            @endif
                                         </div>
                                     </div>
-                                    <!-- @if($dt->cek=='0')
-                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Data Sudah Benar?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
-                                    @endif -->
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1')
+                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
+                                    @endif
                                 </form>
                             </div>
                             <!-- <div class="card-body">
@@ -56,47 +62,27 @@
                         <tr>
                             <th>No. </th>
                             <th>No. Transaksi</th>
-                            <th>Nama Lapangan</th>
+                            <th>Tanggal Transaksi</th>
+                            <th>Tanggal Main</th>
+                            <th>Jam Main</th>
                             <th>Keterangan</th>
-                            <th>Konfirmasi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no=1 ?>
                         @foreach($data as $dt)
+                        @if($dt->data_jadwal->keterangan == 'Selesai')
                         <tr>
                             <td>{{$no}}. </td>
                             <td>TRS-{{$dt->id_sewa}}</td>
-                            <td>{{$dt->nama_lapangan->nama_lap}}</td>
+                            <td>{{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($dt->data_jadwal->tanggalmain)->format('d F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($dt->data_jadwal->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->data_jadwal->jam_selesai)->format('H:i') }} WIB</td>
                             <td>
-                                @if($dt->keterangan=='Sedang di Cek')
-                                <span class="badge bg-warning">{{$dt->keterangan}}</span>
-                                @endif
-                                @if($dt->keterangan=='Aktif')
-                                <span class="badge bg-primary">{{$dt->keterangan}}</span>
-                                @endif
-                                @if($dt->keterangan=='Selesai')
-                                <span class="badge bg-success">{{$dt->keterangan}}</span>
-                                @endif
-                                @if($dt->keterangan=='Di Batalkan')
-                                <span class="badge bg-danger">{{$dt->keterangan}}</span>
-                                @endif
-                                @if($dt->keterangan=='Expired')
-                                <span class="badge bg-danger">{{$dt->keterangan}}</span>
-                                @endif
-                                @if($dt->keterangan=='Mulai')
-                                <span class="badge bg-info">{{$dt->keterangan}}</span>
-                                @endif
+                                <span class="badge bg-success">{{$dt->data_jadwal->keterangan}}</span>
                             </td>
-                            <td>
-                                @if($dt->konfirmasi=='Sudah di Konfirmasi')
-                                <span class="badge bg-primary">{{$dt->konfirmasi}}</span>
-                                @endif
-                                @if($dt->konfirmasi=='Belum di Konfirmasi')
-                                <span class="badge bg-danger">{{$dt->konfirmasi}}</span>
-                                @endif
-                            </td>
-                    </tr>
+                        </tr>
+                        @endif
                     <?php $no++ ?>
                     @endforeach
                 </tbody>

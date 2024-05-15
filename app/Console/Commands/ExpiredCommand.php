@@ -41,9 +41,9 @@ class ExpiredCommand extends Command
     {
         $data_booking_list = Data_sewa::where([
             ['keterangan', '=', '-'],
-            ['bukti_tf', '=', '-'],
+            ['bukti_tf', '=', 'Belum di Bayar'],
             ['tempo', '<', Carbon::now()->toTimeString()],
-        ])->update(['keterangan' => 'Expired', 'setuju' => '0']);
+        ])->update(['keterangan' => 'Expired']);
 
     }
 }

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $table="image_lapangan";
-    protected $primaryKey="id_image";
+    protected $table = "image_lapangan";
+    protected $primaryKey = "id_image";
 }

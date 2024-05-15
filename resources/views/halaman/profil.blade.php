@@ -6,6 +6,11 @@
         <div class="alert alert-light-danger color-danger"><i
             class="bi bi-exclamation-circle"></i> Isi data diri kamu dengan benar, bila melakukan manipulasi data akun akan di nonaktifkan
         </div>
+        @if (auth()->user()->member == '1')
+        <div class="alert alert-light-success color-success"><i
+            class="bi bi-exclamation-circle"></i> Selamat, Kamu sudah menjadi member, nikmati keuntungannya!
+        </div>
+        @endif
     </div>
         <section class="section">
             <div class="card">
@@ -78,7 +83,11 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <label>No KTP: &ast;</label>
+                                                    @if($cst->ktp == NULL)
+                                                    <label>No KTP: <span style="color: red;">&ast;</span></label>
+                                                    @else
+                                                    <label>No KTP: </label>
+                                                    @endif
                                                     <div class="form-group">
                                                         <input type="number" name="ktp" value="{{$cst->ktp}}"
                                                         class="form-control" required>
@@ -92,7 +101,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <label>Username: &ast;</label>
+                                                    @if($cst->username == NULL)
+                                                    <label>Username: <span style="color: red;">&ast;</span></label>
+                                                    @else
+                                                    <label>Username: </label>
+                                                    @endif
                                                     <div class="form-group">
                                                         <input type="text" name="username" value="{{$cst->username}}"
                                                         class="form-control" required>
@@ -107,14 +120,22 @@
                                                 </div>
                                                 <input type="hidden" name="id_sewa" value="{{$cst->id_datauser}}">
                                                 <div class="col-lg-6">
-                                                    <label>N0 Telp/WA: &ast;</label>
+                                                    @if($cst->no_telp == NULL)
+                                                    <label>N0 Telp/WA: <span style="color: red;">&ast;</span></label>
+                                                    @else
+                                                    <label>N0 Telp/WA: </label>
+                                                    @endif
                                                     <div class="form-group">
                                                         <input type="number" name="no_telp" value="{{$cst->no_telp}}"
                                                         class="form-control" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <label>JENIS KELAMIN: &ast;</label>
+                                                    @if($cst->jenis_kelamin == NULL)
+                                                    <label>JENIS KELAMIN: <span style="color: red;">&ast;</span></label>
+                                                    @else
+                                                    <label>JENIS KELAMIN: </label>
+                                                    @endif
                                                     <div class="form-group">
                                                         <select class="form-control" name="jenis_kelamin" required>
                                                             <option <?php if($cst->jenis_kelamin=="Laki-Laki"){echo "selected";}?> value="Laki-Laki" >Laki-Laki</option>
@@ -125,7 +146,7 @@
                                                 @if ($cst->gambar_ktp == NULL)
                                                  <div class="col-lg-6">
                                                     <div class="form=group">
-                                                        <label>KTP &ast;</label>
+                                                        <label>KTP <span style="color: red;">&ast;</span></label>
                                                         <input type="file" class="form-control" accept="image/*" name="gambar_ktp" value="{{$cst->gambar_ktp}}" required>
                                                     </div>  
                                                 </div>
@@ -139,7 +160,11 @@
                                                 </div>
                                                 @endif
                                                 <div class="col-lg-6">
-                                                    <label>Alamat: &ast;</label>
+                                                    @if($cst->alamat_penyewa == NULL)
+                                                    <label>Alamat: <span style="color: red;">&ast;</span></label>
+                                                    @else
+                                                    <label>Alamat: </label>
+                                                    @endif
                                                     <div class="form-group">
                                                         <textarea class="form-control" name="alamat_penyewa" rows="4">{{$cst->alamat_penyewa}}</textarea>
                                                     </div>

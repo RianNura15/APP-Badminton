@@ -5,8 +5,7 @@
 @section('content')
 <div class="page-content">
     <section class="row">
-        <div class="col-12 col-lg-8" style="float: left;">
-
+        <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
@@ -19,11 +18,10 @@
                                         <form class="form form-vertical" method="GET" action="{{route('konfirmasi',$dt->id_sewa)}}">
                                             <input type="hidden" name="sewa_id" value="{{$dt->id_sewa}}">
                                             <input type="hidden" name="nominal" value="{{$dt->total}}">
-                                            <input type="hidden" name="tanggal" value="{{$dt->tanggal}}">
                                             <input type="hidden" name="status_pembayaran" value="Lunas">
                                             <input type="hidden" name="id_datasewa" value="{{$dt->id_sewa}}">
-                                            @if($dt->bukti_tf!=="-" && $dt->keterangan=='Sedang di Cek')
-                                            <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Mengkonfirmasi transaksi dengan kode TRS-{{$dt->id_sewa}}?')"> <i class="icon dripicons-document-edit" onclick="return confirm('Yakin Data Sudah Benar?')"></i> Konfirmasi</button>
+                                            @if($dt->bukti_tf=="DP Terbayar" && $dt->keterangan=='DP')
+                                            <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Mengkonfirmasi transaksi dengan kode TRS-{{$dt->id_sewa}}?')"> <i class="icon dripicons-document-edit" onclick="return confirm('Yakin Data Sudah Benar?')"></i>Konfirmasi Lunas</button>
                                             @endif
                                         </form>
                                         @endforeach
@@ -32,24 +30,14 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         @foreach($data as $dt)
+                                        @foreach($jwl as $jadwal)
                                         @csrf
                                         <form class="form form-vertical" method="GET" action="{{route('batalkan',$dt->id_sewa)}}">
-                                            @if($dt->keterangan!=='Di Batalkan')
-                                            <button class="btn btn-sm btn-outline-danger form-control rounded-pill mt-4" onclick="return confirm('Yakin Akan Dibatalkan?')"> <i class="icon dripicons-document-edit"></i> Batalkan</button>
+                                            @if($dt->keterangan == '-' || $dt->keterangan == 'DP' || $dt->keterangan == 'Clear' && $jadwal->keterangan == 'Aktif')
+                                            <button class="btn btn-sm btn-outline-danger form-control rounded-pill mt-4" onclick="return confirm('Yakin Akan Dibatalkan?')"> <i class="icon dripicons-document-edit"></i>Batalkan</button>
                                             @endif
                                         </form>
                                         @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        @foreach($data as $dt)
-                                        @csrf
-                                        <form class="form form-vertical" method="GET" action="{{route('setuju',$dt->id_sewa)}}">
-                                            @if($dt->setuju=='0' && $dt->keterangan!=='Di Batalkan' && $dt->keterangan!=='Expired')
-                                            <button class="btn btn-sm btn-outline-success form-control rounded-pill mt-4" onclick="return confirm('Yakin Akan Dibatalkan?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
-                                            @endif
-                                        </form>
                                         @endforeach
                                     </div>
                                 </div>
@@ -93,7 +81,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="email-id-vertical">Jenis Kelaminn</label>
+                                        <label for="email-id-vertical">Jenis Kelamin</label>
                                         <p>{{$dt->jenis_kelamin}}</p>
                                     </div>
                                 </div>
@@ -109,10 +97,33 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="col-12 col-lg-8" style=" float: left; margin-bottom: 450px;">
-
+        <div class="col-12 col-lg-4">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <h4 class="card-title">Pembayaran</h4>
+                        <hr>
+                        <div class="form-body">
+                            <div class="row">
+                                @foreach($data as $dt)
+                                @if($dt->bukti_tf=="Belum di Bayar")
+                                <span class="badge bg-lg bg-warning" style="padding: 20px; font-size: 20px;">{{$dt->bukti_tf}}</span>
+                                @endif
+                                @if($dt->bukti_tf=="Terbayar")
+                                <span class="badge bg-lg bg-primary" style="padding: 20px; font-size: 20px;">{{$dt->bukti_tf}}</span>
+                                @endif
+                                @if($dt->bukti_tf=="DP Terbayar")
+                                <span class="badge bg-lg bg-info" style="padding: 20px; font-size: 20px;">{{$dt->bukti_tf}}</span>
+                                @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-12" style=" float: left; margin-bottom: 450px;">
             <div class="card">
                 <div class="card-header">
                     @foreach($data as $dt)
@@ -130,6 +141,7 @@
                             <th>Tanggal Main</th>
                             <th>Jam Main</th>
                             <th>Total Jam</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,50 +174,44 @@
                                 @if($dt->keterangan=='Aktif' || $dt->keterangan=='Selesai' || $dt->keterangan=='Mulai')
                                 <span class="badge bg-primary">Clear</span>
                                 @endif
-                                @if($dt->keterangan=='Di Batalkan')
-                                <span class="badge bg-danger">---</span>
-                                @endif
-                                @if($dt->keterangan=='Pending')
-                                <span class="badge bg-warning">---</span>
+                                @if($dt->keterangan=='Di Batalkan Admin' || $dt->keterangan == 'Di Batalkan Pelanggan')
+                                <span class="badge bg-danger">X</span>
                                 @endif
                             </td>
                             <td>{{$dt->tanggalmain}}</td>
                             <td>{{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }} WIB</td>
                             <td>{{$jam}} Jam</td>
-                    </tr>
-                    <?php $no++ ?>
-                    @endforeach
-                </tbody>
-            </table>
+                            <td>
+                                @if($dt->keterangan=='Pending')
+                                <span class="badge bg-warning">Pending</span>
+                                @endif
+                                @if($dt->keterangan=='Aktif')
+                                <span class="badge bg-primary">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='Selesai')
+                                <span class="badge bg-success">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='Di Batalkan Pelanggan' || $dt->keterangan=='Di Batalkan Admin')
+                                <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='Expired')
+                                <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='Mulai')
+                                <span class="badge bg-info">{{$dt->keterangan}}</span>
+                                @endif
+                                @if($dt->keterangan=='-')
+                                <span class="badge bg-warning">Menunggu</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <?php $no++ ?>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-        </div>
-        <div class="col-12 col-lg-4" style="float: right; margin-bottom: 500px; margin-top: -430px;">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <h4 class="card-title">Bukti Pembayaran</h4>
-                        <hr>
-                        <div class="form-body">
-                            <div class="row">
-                                @foreach($data as $dt)
-                                @if($dt->bukti_tf=="-")
-                                <button class="btn btn-lg btn-danger">Belum Upload <br> Bukti Transfer</button>
-                                @endif
-                                @if($dt->bukti_tf!=="-" && $dt->isadmin=='0')
-                                <img src="{{asset('upload')}}/{{$dt->bukti_tf}}" class="img-thumbnail">
-                                @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-
-        </div>
-        
     </section>
 </div>
 @endsection

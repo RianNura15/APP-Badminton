@@ -41,7 +41,7 @@
             <td style="text-align: center;">{{$dt->data_sewa->nama_lap}}</td>
             <td style="text-align: center;">{{$dt->data_sewa->name}}</td>
             <td style="text-align: center;">{{$dt->data_sewa->namapb}}</td>
-            <td style="text-align: center;">{{$dt->tanggal}}</td>
+            <td style="text-align: center;">{{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</td>
             <td style="text-align: center;">{{$dt->status_pembayaran}}</td>
             <td style="text-align: center;">Rp. {{number_format($dt->nominal,0,",",".")}}</td>
         </tr>

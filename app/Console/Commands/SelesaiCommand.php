@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use App\Models\Jadwal;
+Use App\Models\Data_sewa;
 
 class SelesaiCommand extends Command
 {
@@ -39,7 +40,7 @@ class SelesaiCommand extends Command
      */
     public function handle()
     {
-         $data_booking_list = Jadwal::where([
+        $data_booking_list = Jadwal::where([
             ['keterangan', '=', 'Mulai'],
             ['status', '=', '1'],
             ['tanggalmain', '=', Carbon::today()->toDateString()],

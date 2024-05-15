@@ -3,8 +3,8 @@
 	document.getElementById('success');
 	Swal.fire({
 		icon: "success",
-		title: "Selamat, Pendaftaran Berhasil",
-		text: "Kamu Sudah Menjadi Member, Nikmati Keuntungannya",
+		title: "Pendaftaran Berhasil",
+		text: "Pendaftaran Sedang di Proses, Harap Tunggu dan Lihat di Halaman Profil Setelah Terkonfirmasi Oleh Admin!",
 	});
 </script>
 @endif
@@ -287,13 +287,22 @@
 </script>
 @endif
 
-@if(session('digunakan'))
+@if(session('digunakan') || session('digunakan2'))
 <script type="text/javascript">
+	var message = '';
+	@if(session('digunakan')) 
+		message += '{{ session('digunakan') }} <br>';
+	@endif
+
+	@if(session('digunakan2')) 
+		message += '{{ session('digunakan2') }}';
+	@endif
+
 	document.getElementById('warning');
 	Swal.fire({
 		icon: "warning",
 		title: "Lapangan Sudah di Booking",
-		text: "Silahkan Cari Jam Lain"
+		html: message
 	});
 </script>
 @endif
@@ -335,7 +344,7 @@
 	Swal.fire({
 		icon: "success",
 		title: "Lapangan Berhasil Dipesan",
-		text: "Segera Mengirim Bukti Pembayaran saat tombol upload muncul!"
+		text: "Segera Melakukan Pembayaran Pada Tombol Berwarna Hijau!"
 	});
 </script>
 @endif
@@ -367,6 +376,16 @@
 	Swal.fire({
 		icon: "success",
 		title: "Berhasil Ubah Keterangan",
+	});
+</script>
+@endif
+
+@if(session('expired'))
+<script type="text/javascript">
+	document.getElementById('success');
+	Swal.fire({
+		icon: "success",
+		title: "Berhasil Mengubah Data Menjadi Expired",
 	});
 </script>
 @endif
@@ -406,7 +425,7 @@
 	document.getElementById('success');
 	Swal.fire({
 		icon: "success",
-		title: "Penyewaan Selesai",
+		title: "Berhasil Mengubah Data Menjadi Selesai",
 	});
 </script>
 @endif

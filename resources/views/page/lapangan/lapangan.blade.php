@@ -27,7 +27,8 @@
                         <th>No. </th>
                         <th>Nama Lapangan</th>
                         <th>Jenis Lapangan</th>
-                        <th>Harga Sewa</th>
+                        <th>Harga Pagi</th>
+                        <th>Harga Malam</th>
                         <th>Gambar</th>
                         <th>Kegiatan</th>
                         <th>Aksi</th>
@@ -40,7 +41,8 @@
                         <td>{{$no}}. </td>
                         <td>{{$dt->nama_lap}}</td>
                         <td>{{$dt->nama_jenis}}</td>
-                        <td>Rp {{number_format($dt->harga,0,",",".")}}</td>
+                        <td>Rp. {{number_format($dt->harga_pagi,0,",",".")}}</td>
+                        <td>Rp. {{number_format($dt->harga_malam,0,",",".")}}</td>
                         <td>
                             <a href="{{asset('gambar')}}//{{$dt->gambar}}" target="_blank">
                                 <img src="{{asset('gambar')}}//{{$dt->gambar}}" width="80">
@@ -82,13 +84,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <input type="hidden" value="{{$dt->id_lapangan}}" name="id_lapangan">
-                                        <div class="form=group">
+                                        <div class="form-group">
                                             <label>Nama Sarana</label>
                                             <input type="text" value="{{$dt->nama_lap}}" class="form-control" name="nama_lap">
                                         </div>  
                                     </div>
                                     <div class="col-6">
-                                        <div class="form=group">
+                                        <div class="form-group">
                                             <label>Jenis Sarana</label>
                                             <select class="form-control" name="jenis_id">
                                                 @foreach($jenis as $js)
@@ -98,25 +100,31 @@
                                         </div>  
                                     </div>
                                     <div class="col-4">
-                                        <div class="form=group">
-                                            <label>Harga Sewa</label>
-                                            <input type="number" value="{{$dt->harga}}" class="form-control" name="harga">
+                                        <div class="form-group">
+                                            <label>Harga Pagi</label>
+                                            <input type="number" value="{{$dt->harga_pagi}}" class="form-control" name="harga_pagi">
                                         </div>  
                                     </div>
                                     <div class="col-4">
-                                        <div class="form=group">
+                                        <div class="form-group">
+                                            <label>Harga Malam</label>
+                                            <input type="number" value="{{$dt->harga_malam}}" class="form-control" name="harga_malam">
+                                        </div>  
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
                                             <label>Kegiatan</label>
                                             <input type="text" value="{{$dt->kegiatan}}" class="form-control" name="kegiatan">
                                         </div>  
                                     </div>
                                     <div class="col-4">
-                                        <div class="form=group">
+                                        <div class="form-group">
                                             <label>Gambar Sarana</label>
                                             <input type="file" class="form-control" name="gambar">
                                         </div>  
                                     </div>
                                     <div class="col-12">
-                                        <div class="form=group">
+                                        <div class="form-group">
                                             <label>Keterangan/Detail Sarana</label>
                                             <textarea class="form-control" rows="5" name="det_lapangan">{{$dt->det_lapangan}}</textarea>
                                         </div>  
@@ -171,7 +179,7 @@ role="document">
                 </div>  
             </div>
             <div class="col-6">
-                <div class="form=group">
+                <div class="form-group">
                     <label>Jenis Sarana</label>
                     <select class="form-control" required="" name="jenis_id">
                         @foreach($jenis as $js)
@@ -181,25 +189,31 @@ role="document">
                 </div>  
             </div>
             <div class="col-4">
-                <div class="form=group">
-                    <label>Harga Sewa</label>
-                    <input type="text" required="" class="form-control" name="harga">
+                <div class="form-group">
+                    <label>Harga Pagi</label>
+                    <input type="text" required="" class="form-control" name="harga_pagi">
                 </div>  
             </div>
             <div class="col-4">
-                <div class="form=group">
+                <div class="form-group">
+                    <label>Harga Malam</label>
+                    <input type="text" required="" class="form-control" name="harga_malam">
+                </div>  
+            </div>
+            <div class="col-4">
+                <div class="form-group">
                     <label>Kegiatan</label>
                     <input type="text" required="" class="form-control" name="kegiatan">
                 </div>  
             </div>
             <div class="col-4">
-                <div class="form=group">
+                <div class="form-group">
                     <label>Gambar Sarana</label>
                     <input type="file" required="" accept="image/*" class="form-control" name="gambar">
                 </div>  
             </div>
             <div class="col-12">
-                <div class="form=group">
+                <div class="form-group">
                     <label>Keterangan/Detail Sarana</label>
                     <textarea class="form-control" required="" rows="5" name="det_lapangan"></textarea>
                 </div>  

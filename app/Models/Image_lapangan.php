@@ -9,6 +9,6 @@ class Image_lapangan extends Model
 {
     use HasFactory;
 
-    protected $table="image_lapangan";
+    protected $table = "image_lapangan";
     protected $guarded = ['id_image'];
 }

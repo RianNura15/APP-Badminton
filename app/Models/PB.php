@@ -9,6 +9,6 @@ class PB extends Model
 {
     use HasFactory;
 
-    protected $table="data_pb";
+    protected $table = "data_pb";
     protected $guarded = ['id_pb'];
 }

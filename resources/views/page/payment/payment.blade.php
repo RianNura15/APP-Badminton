@@ -15,19 +15,18 @@
         <div class="card">
             <div class="card-header">
                 With Data Kode Pembayaran
-                <button style="float: right;" type="button" class="btn btn-sm btn-outline-primary block"
+                <!-- <button style="float: right;" type="button" class="btn btn-sm btn-outline-primary block"
                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                 Tambah Data
-            </button>
-        </div>
+                </button> -->
+            </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
                         <th>No. </th>
-                        <th>No Rekening</th>
-                        <th>Bank</th>
-                        <th>Nama Rekening</th>
+                        <th>Metode Pembayaran</th>
+                        <th>Jumlah DP</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -36,12 +35,42 @@
                     @foreach($data as $dt)
                     <tr>
                         <td>{{$no}}. </td>
-                        <td>{{$dt->no_rek}}</td>
-                        <td>{{$dt->bank}}</td>
-                        <td>{{$dt->nama_rek}}</td>
+                        <td>{{$dt->metode_payment}}</td>
+                        @if($dt->dp == '0.00')
+                        <td>{{$dt->dp}} (0%)</td>
+                        @endif
+                        @if($dt->dp == '0.10')
+                        <td>{{$dt->dp}} (10%)</td>
+                        @endif
+                        @if($dt->dp == '0.20')
+                        <td>{{$dt->dp}} (20%)</td>
+                        @endif
+                        @if($dt->dp == '0.30')
+                        <td>{{$dt->dp}} (30%)</td>
+                        @endif
+                        @if($dt->dp == '0.40')
+                        <td>{{$dt->dp}} (40%)</td>
+                        @endif
+                        @if($dt->dp == '0.50')
+                        <td>{{$dt->dp}} (50%)</td>
+                        @endif
+                        @if($dt->dp == '0.60')
+                        <td>{{$dt->dp}} (60%)</td>
+                        @endif
+                        @if($dt->dp == '0.70')
+                        <td>{{$dt->dp}} (70%)</td>
+                        @endif
+                        @if($dt->dp == '0.80')
+                        <td>{{$dt->dp}} (80%)</td>
+                        @endif
+                        @if($dt->dp == '0.90')
+                        <td>{{$dt->dp}} (90%)</td>
+                        @endif
                         <td align="center">
+                            @if($dt->metode_payment == 'Bayar di Tempat')
                             <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id_payment}}" class="btn btn-sm btn-success">Edit</button>
-                            <a href="{{route('delete_payment',$dt->id_payment)}}" onclick="return confirm('Yakin hapus data payment {{$dt->nama_rek}}?')" class="btn btn-sm btn-danger">Hapus</a>
+                            @endif
+                            <!-- <a href="{{route('delete_payment',$dt->id_payment)}}" onclick="return confirm('Yakin hapus data payment {{$dt->metode_payment}}?')" class="btn btn-sm btn-danger">Hapus</a> -->
                         </td>
                     </tr>
                     <?php $no++ ?>
@@ -61,18 +90,137 @@
                     <form method="post" action="{{route('update_payment')}}">
                         @csrf
                         <div class="modal-body">
-                            <div class="form=group">
+                            <div class="form-group">
                                 <input type="hidden" value="{{$dt->id_payment}}" name="id_payment">
-                                <label>No Rekening</label>
-                                <input type="number" class="form-control" value="{{$dt->no_rek}}" name="no_rek" placeholder="12345678" autofocus>
+                                <label>Metode Pembayaran ({{$dt->metode_payment}})</label>
+                                <!-- <input type="text" value="{{$dt->metode_payment}}" class="form-control" name="metode_payment"> -->
                             </div>
-                            <div class="form=group">
-                                <label>Bank</label>
-                                <input type="text" class="form-control" value="{{$dt->bank}}" name="bank" placeholder="BRI">
-                            </div>
-                            <div class="form=group">
-                                <label>Nama Rekening</label>
-                                <input type="text" class="form-control" value="{{$dt->nama_rek}}" name="nama_rek" placeholder="Nama Rekening">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Jumlah DP</label>
+                                    <select class="form-control" name="dp">
+                                        @if($dt->dp == 0.00)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.10)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (10%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.20)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (20%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.30)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (30%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.40)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (40%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.50)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (50%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.3">0.20 (20%)</option>
+                                        <option value="0.4">0.30 (30%)</option>
+                                        <option value="0.5">0.40 (40%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.60)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (60%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.3">0.20 (20%)</option>
+                                        <option value="0.4">0.30 (30%)</option>
+                                        <option value="0.5">0.40 (40%)</option>
+                                        <option value="0.6">0.50 (50%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.70)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (70%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.80)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (80%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.9">0.90 (90%)</option>
+                                        @endif
+                                        @if($dt->dp == 0.90)
+                                        <option value="{{$dt->dp}}">{{$dt->dp}} (90%)</option>
+                                        <option value="0.0">0.00 (0%)</option>
+                                        <option value="0.1">0.10 (10%)</option>
+                                        <option value="0.2">0.20 (20%)</option>
+                                        <option value="0.3">0.30 (30%)</option>
+                                        <option value="0.4">0.40 (40%)</option>
+                                        <option value="0.5">0.50 (50%)</option>
+                                        <option value="0.6">0.60 (60%)</option>
+                                        <option value="0.7">0.70 (70%)</option>
+                                        <option value="0.8">0.80 (80%)</option>
+                                        @endif
+                                    </select>
+                                </div>  
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -114,17 +262,26 @@ role="document">
 <form method="post" action="{{route('add_payment')}}">
     @csrf
     <div class="modal-body">
-        <div class="form=group">
-            <label>No Rekening</label>
-            <input type="number" required="" class="form-control" name="no_rek">
+        <div class="form-group">
+            <label>Metode Pembayaran</label>
+            <input type="text" required="" class="form-control" name="metode_payment">
         </div>
-        <div class="form=group">
-            <label>Bank</label>
-            <input type="text" required="" class="form-control" name="bank">
-        </div>
-        <div class="form=group">
-            <label>Nama Rekening</label>
-            <input type="text" required="" class="form-control" name="nama_rek">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Jumlah DP</label>
+                <select class="form-control" name="dp">
+                    <option value="0.0">0.00 (0%)</option>
+                    <option value="0.1">0.10 (10%)</option>
+                    <option value="0.2">0.20 (20%)</option>
+                    <option value="0.3">0.30 (30%)</option>
+                    <option value="0.4">0.40 (40%)</option>
+                    <option value="0.5">0.50 (50%)</option>
+                    <option value="0.6">0.60 (60%)</option>
+                    <option value="0.7">0.70 (70%)</option>
+                    <option value="0.8">0.80 (80%)</option>
+                    <option value="0.9">0.90 (90%)</option>
+                </select>
+            </div>  
         </div>
     </div>
     <div class="modal-footer">

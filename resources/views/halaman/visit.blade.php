@@ -25,7 +25,8 @@
               {{$data->nama_jenis}}
             </p>
             <p class="heading">Kegiatan : {{$data->kegiatan}}</p>
-            <p class="heading">Rp. {{number_format($data->harga,0,",",".")}}/bulan - 1 minggu 2x Main/4 jam</p>
+            <p class="heading">Pagi = Rp. {{number_format($data->harga_pagi,0,",",".")}}/jam</p>
+            <p class="heading">Malam = Rp. {{number_format($data->harga_pagi,0,",",".")}}/jam</p>
           </div>
           @endforeach
         </figure>

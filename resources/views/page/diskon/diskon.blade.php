@@ -7,18 +7,20 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Diskon</h3>
+                <h3>Data Diskon Member</h3>
             </div>
         </div>
     </div>
     <section class="section">
         <div class="card">
             <div class="card-header">
-                With Data Diskon
+                With Data Diskon Member
+                @if($jumlah < 1)
                 <button style="float: right;" type="button" class="btn btn-sm btn-outline-primary block"
                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                 Tambah Data
                 </button>
+                @endif
             </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
@@ -35,14 +37,14 @@
                     <tr>
                         <td>{{$loop->iteration}}. </td>
                         <td>{{$dt->nama_diskon}}</td>
-                        <td>{{$dt->hargadiskon}}</td>
+                        <td>Rp. {{number_format($dt->hargadiskon,0,",",".")}}</td>
                         <td align="center">
                             <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id}}" class="btn btn-sm btn-success">
                                 <i class="dripicons dripicons-document-edit"></i>
                             </button>
-                            <a href="diskon/delete/{{$dt->id}}" onclick="return confirm('Yakin hapus data diskon {{$dt->nama_diskon}}?')" class="btn btn-sm btn-danger">
+                            <!-- <a href="diskon/delete/{{$dt->id}}" onclick="return confirm('Yakin hapus data diskon {{$dt->nama_diskon}}?')" class="btn btn-sm btn-danger">
                                 <i class="dripicons dripicons-trash"></i>
-                            </a>
+                            </a> -->
                         </td>
                     </tr>
 
@@ -67,7 +69,7 @@
                                         <input type="hidden" value="{{$dt->id}}" name="id">
                                         <div class="form=group">
                                             <label>Nama Diskon</label>
-                                            <input type="text" value="{{$dt->nama_diskon}}" class="form-control" name="nama_diskon">
+                                            <input type="text" value="{{$dt->nama_diskon}}" class="form-control" name="nama_diskon" disabled>
                                         </div>  
                                     </div>
                                     <div class="col-4">
@@ -122,13 +124,13 @@ role="document">
             <div class="col-6">
                 <div class="form=group">
                     <label>Nama Diskon</label>
-                    <input type="text" required="" class="form-control" name="nama_diskon" placeholder="Diskon" required autofocus>
+                    <input type="text" class="form-control" name="nama_diskon" value="Member / Pelajar" disabled>
                 </div>  
             </div>
             <div class="col-4">
                 <div class="form=group">
                     <label>Nominal Diskon</label>
-                    <input type="number" required="" class="form-control" name="hargadiskon" placeholder="Contoh: 10000" required>
+                    <input type="number" required class="form-control" name="hargadiskon" placeholder="Contoh: 10000" autofocus>
                 </div>  
             </div>
         </div>

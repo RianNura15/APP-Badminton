@@ -20,7 +20,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
-                                                <h6 class="text-muted font-semibold">Pending</h6>
+                                                <h6 class="text-muted font-semibold">Belum Bayar</h6>
                                                 <h6 class="font-extrabold mb-0">{{$pending}}</h6>
                                             </div>
                                         </div>
@@ -54,8 +54,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
-                                                <h6 class="text-muted font-semibold">PB</h6>
-                                                <h6 class="font-extrabold mb-0">{{$pb}}</h6>
+                                                <h6 class="text-muted font-semibold">Bayar DP</h6>
+                                                <h6 class="font-extrabold mb-0">{{$dp}}</h6>
                                             </div>
                                         </div>
                                     </div>

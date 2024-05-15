@@ -19,49 +19,26 @@
                                 <div class="col-3">Lapangan </div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> {{$dt->nama_lapangan->nama_lap}} - {{$dt->nama_lapangan->nama_jenis}} </div>
-                                <div class="col-3">Ke Rekening </div>
+                                <div class="col-3">Total </div>
                                 <div class="col-1">: </div>
-                                <div class="col-8"> {{$dt->payment->no_rek}} - {{$dt->payment->nama_rek}} </div>
-                                <div class="col-3">Harga </div>
-                                <div class="col-1">: </div>
-                                <div class="col-8"> Rp {{number_format($dt->hargasewa,0,",",".")}} </div>
-                                <div class="col-3">Tanggal </div>
+                                <div class="col-8"> Rp {{number_format($dt->total,0,",",".")}} </div>
+                                <div class="col-3">Tanggal Transaksi</div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> {{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }} </div>
-                                <div class="col-3">Konfirmasi </div>
-                                <div class="col-1">: </div>
-                                <div class="col-8"> 
-                                    @if($dt->konfirmasi=="Belum di Konfirmasi")
-                                    <span class="badge bg-warning">{{$dt->konfirmasi}}</span>
-                                    @endif
-                                    @if($dt->konfirmasi=="Sudah di Konfirmasi")
-                                    <span class="badge bg-success">{{$dt->konfirmasi}}</span>
-                                    @endif
-                                    @if($dt->konfirmasi=="Batal")
-                                    <span class="badge bg-danger">{{$dt->konfirmasi}}</span>
-                                    @endif
-                                </div>
                                 <div class="col-3">Keterangan </div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> 
-                                    @if($dt->bukti_tf=="-" && $dt->keterangan!=='Di Batalkan' && $dt->tempo==\Carbon\Carbon::parse($dt->tempo)->locale('id')->diffForHumans() <= $dt->tempo && $dt->bukti_tf=='-')
-                                    <span class="badge bg-danger">Segera Upload Bukti Transfer ke Rekening</span>
+                                    @if($dt->bukti_tf=="Belum di Bayar")
+                                    <span class="badge bg-warning">Belum di Bayar</span>
                                     @endif
-                                    @if($dt->keterangan=="Aktif")
-                                    @if($dt->bukti_tf!=="-")
-                                    <span class="badge bg-primary">
-                                        {{$dt->keterangan}}
-                                    </span>
+                                    @if($dt->keterangan=="Clear")
+                                    <span class="badge bg-primary">{{$dt->keterangan}}</span>
                                     @endif
-                                    @endif
-                                    @if($dt->keterangan=='Selesai')
-                                    <span class="badge bg-success">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan=="DP")
+                                    <span class="badge bg-info">{{$dt->keterangan}}</span>
                                     @endif
                                     @if($dt->keterangan=='Di Batalkan')
                                     <span class="badge bg-danger">{{$dt->keterangan}}</span>
-                                    @endif
-                                    @if($dt->keterangan=='Sedang di Cek')
-                                    <span class="badge bg-warning">{{$dt->keterangan}}</span>
                                     @endif
                                     @if($dt->tempo==\Carbon\Carbon::parse($dt->tempo)->locale('id')->diffForHumans() >= $dt->tempo && $dt->bukti_tf=="-")
                                     <span class="badge bg-danger">Expired</span>

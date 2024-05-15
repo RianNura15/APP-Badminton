@@ -30,6 +30,7 @@
                         <th>No. KTP</th>
                         <th>KTP</th>
                         <th>Status</th>
+                        <th>Member</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -52,6 +53,17 @@
                             @endif
                             @if($dt->status_user=='Non-Aktif')
                             <span class="badge bg-danger">{{$dt->status_user}}</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($dt->member == '0' && $dt->pengajuan_member == '0')
+                            <span class="badge bg-danger">Bukan Member</span>
+                            @endif
+                            @if($dt->member == '0' && $dt->pengajuan_member == '1')
+                            <span class="badge bg-warning">Diajukan</span>
+                            @endif
+                            @if($dt->member == '1' && $dt->pengajuan_member == '1')
+                            <span class="badge bg-success">Member</span>
                             @endif
                         </td>
                         <td align="center">

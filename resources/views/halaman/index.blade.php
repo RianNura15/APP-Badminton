@@ -69,7 +69,8 @@ $profil=DB::table('profil')->get();
                       {{$lp->nama_jenis}}
                     </p>
                     <br>
-                    <p class="heading">Rp. {{number_format($lp->harga,0,",",".")}}/bulan</p>
+                    <p class="heading">Pagi = Rp. {{number_format($lp->harga_pagi,0,",",".")}}/jam</p>
+                    <p class="heading">Malam = Rp. {{number_format($lp->harga_malam,0,",",".")}}/jam</p>
                   </div>
                   <br>
                 </article>
@@ -92,7 +93,8 @@ $profil=DB::table('profil')->get();
                       {{$lp->nama_jenis}}
                     </p>
                     <br>
-                    <p class="heading">Rp. {{number_format($lp->harga,0,",",".")}}/Bulan - 1 minggu 2x Main/4 jam</p>
+                    <p class="heading">Pagi = Rp. {{number_format($lp->harga_pagi,0,",",".")}}/jam</p>
+                    <p class="heading">Malam = Rp. {{number_format($lp->harga_malam,0,",",".")}}/jam</p>
                   </div>
                   <br>
                 </article>

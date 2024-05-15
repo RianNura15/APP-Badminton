@@ -125,15 +125,12 @@
                                 <div class="col-3">Jenis Lapangan </div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> {{$dt->nama_lapangan->nama_jenis}} </div>
-                                <div class="col-3">Tanggal </div>
+                                <div class="col-3">Tanggal Transaksi</div>
                                 <div class="col-1">: </div>
-                                <div class="col-8"> {{$dt->tanggal}} </div>
-                                <div class="col-3">Jam </div>
+                                <div class="col-8"> {{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }} </div>
+                                <div class="col-3">Jam Transaksi</div>
                                 <div class="col-1">: </div>
-                                <div class="col-8"> {{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }} </div>
-                                <div class="col-3">Lama Sewa </div>
-                                <div class="col-1">: </div>
-                                <div class="col-8"> {{$dt->totaljam}} Jam </div>
+                                <div class="col-8"> {{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} WIB</div>
                                 <div class="col-3">Konfirmasi </div>
                                 <div class="col-1">: </div>
                                 <div class="col-8"> 
@@ -197,7 +194,7 @@
                         <div class="form-group">
                             <h4 class="card-title">No. Transaksi : TRS-{{$dt->id_sewa}}</h4>
                             <h4 class="card-title">Lapangan : {{$dt->nama_lapangan->nama_lap}}</h4>
-                            <h4 class="card-title">Tanggal : {{$dt->tanggal}}</h4>
+                            <h4 class="card-title">Tanggal Transaksi : {{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</h4>
                             <input type="hidden" name="sewa_id" value="{{$dt->id_sewa}}">
                             <input type="hidden" name="tanggal" value="{{$dt->tanggal}}">
                             <input type="hidden" name="nominal" value="{{$dt->total}}">

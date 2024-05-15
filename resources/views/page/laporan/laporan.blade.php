@@ -60,7 +60,7 @@
                             <td>{{$dt->data_sewa->nama_lap}}</td>
                             <td>{{$dt->data_sewa->name}}</td>
                             <td>{{$dt->data_sewa->namapb}}</td>
-                            <td>{{$dt->tanggal}}</td>
+                            <td>{{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</td>
                             <td>{{$dt->status_pembayaran}}</td>
                             <td>
                                 Rp. {{number_format($dt->nominal,0,",",".")}}

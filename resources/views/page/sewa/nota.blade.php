@@ -20,7 +20,7 @@ $profil=DB::table('profil')->get();
 
 @foreach ($data as $dt)
 <tr>
-<td>Nama Costumer</td><td>:</td>
+<td>Nama Pelanggan</td><td>:</td>
 <td>{{$dt->user->name}}</td>
 </tr>
 
@@ -43,13 +43,13 @@ $profil=DB::table('profil')->get();
 @foreach($jwl as $jadwal)
 <tr>
 <td>Tanggal Main</td><td>:</td>
-<td>{{$jadwal->hari}}, {{ \Carbon\Carbon::parse($jadwal->tanggalmain)->format('d F Y') }}</td>
+<td>{{ \Carbon\Carbon::parse($jadwal->tanggalmain)->format('d F Y') }}</td>
 </tr>
 @endforeach
 @foreach($jwl as $jadwal)
 <tr>
 <td>Jam Main</td><td>:</td>
-<td>{{$jadwal->hari}}, {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }} WIB</td>
+<td>{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }} WIB</td>
 </tr>
 @endforeach
 

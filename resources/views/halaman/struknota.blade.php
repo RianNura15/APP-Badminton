@@ -210,7 +210,6 @@ $profil=DB::table('profil')->get();
                         <tbody>
                             <tr class="add">
                                 <td>Nama Lapangan</td>
-                                <td>Hari</td>
                                 <td>Tanggal Main</td>
                                 <td>Jam Main</td>
                                 <td>Total Jam</td>
@@ -226,7 +225,6 @@ $profil=DB::table('profil')->get();
                             ?>
                             <tr class="content">
                                 <td>{{$dt->data_sewa->nama_lap}}</td>
-                                <td>{{$dt->hari}}</td>
                                 <td>{{ \Carbon\Carbon::parse($dt->tanggalmain)->format('d F Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }} WIB</td>
                                 <td>{{$jam}} Jam</td>
@@ -239,12 +237,22 @@ $profil=DB::table('profil')->get();
                 <div class="products p-2">
                     <table class="table table-borderless">
                         <tbody>
+                            @if($dt->data_sewa->keterangan == 'Clear')
                             <tr class="add">
                                 <td class="text-center"><h3>Total</h3></td>
                             </tr>
                             <tr class="content">
                                 <td class="text-center"><h2>Rp. {{number_format($dt->data_sewa->total,0,",",".")}}</h2></td>
                             </tr>
+                            @endif
+                            @if($dt->data_sewa->keterangan == 'DP')
+                            <tr class="add">
+                                <td class="text-center"><h3>DP</h3></td>
+                            </tr>
+                            <tr class="content">
+                                <td class="text-center"><h2>Rp. {{number_format($dt->data_sewa->dp,0,",",".")}}</h2></td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

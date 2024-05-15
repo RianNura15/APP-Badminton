@@ -24,7 +24,6 @@
                             <th>Jam Main</th>
                             <th>Total Jam</th>
                             <th>Keterangan</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,12 +80,10 @@
                                 @if($dt->keterangan=='Mulai')
                                 <span class="badge bg-info">{{$dt->keterangan}}</span>
                                 @endif
+                                @if($dt->keterangan=='-')
+                                <span class="badge bg-warning">Menunggu</span>
+                                @endif
                             </td>
-                            <td align="center">
-                                <button data-bs-toggle="modal" data-bs-target="#edit{{$dt->id_sewa}}" class="btn btn-sm btn-primary">
-                                    <i class="dripicons dripicons-disc"></i>
-                                </button>
-                        </td>
                     </tr>
                     <?php $no++ ?>
                     @endforeach

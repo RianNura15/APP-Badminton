@@ -9,6 +9,6 @@ class Peralatan extends Model
 {
     use HasFactory;
 
-    protected $table="peralatan";
+    protected $table = "peralatan";
     protected $guarded = ['id'];
 }
