@@ -14,44 +14,45 @@
 </style>
 <div class="page-heading">
   @foreach ($data as $dt)
-  <section class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-body">
-            <h4 class="card-title">{{$dt->nama_lap}} - {{$dt->nama_jenis}}</h4>
-            @if(auth()->user()->member == '1')
-            <h4 class="card-title" id="harga_pagi"></h4>
-            <h4 class="card-title" id="harga_malam"></h4>
-            @else
-            <h4 class="card-title">Pagi = Rp. {{number_format($dt->harga_pagi,0,",",".")}}/jam</h4>
-            <h4 class="card-title">Malam = Rp. {{number_format($dt->harga_malam,0,",",".")}}/jam</h4>
-            @endif
-            <img src="{{asset('gambar')}}/{{$dt->gambar}}" style="max-height: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
+    <section class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <h4 class="card-title">{{$dt->nama_lap}} - {{$dt->nama_jenis}}</h4>
+              @if(auth()->user()->member == '1')
+              <h4 class="card-title" id="harga_pagi"></h4>
+              <h4 class="card-title" id="harga_malam"></h4>
+              @else
+              <h4 class="card-title">Pagi = Rp. {{number_format($dt->harga_pagi,0,",",".")}}/jam</h4>
+              <h4 class="card-title">Malam = Rp. {{number_format($dt->harga_malam,0,",",".")}}/jam</h4>
+              @endif
+              <img src="{{asset('gambar')}}/{{$dt->gambar}}" style="max-height: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- <div class="col-lg-6">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-body">
-            <section id="multiple-column-form" style="">
-              <div class="row match-height">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-content">
-                      <h4 class="card-title">Jadwal</h4>
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-6 col-12">
-                            <div class="form-group">
-                              <input type="date" id="" class="form-control" name="" value="{{ date('Y-m-d')}}">
+      <!-- <div class="col-lg-6">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <section id="multiple-column-form" style="">
+                <div class="row match-height">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-content">
+                        <h4 class="card-title">Jadwal</h4>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                                <input type="date" id="" class="form-control" name="" value="{{ date('Y-m-d')}}">
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-6 col-12">
-                            <div class="form-group">
-                            <a class="btn btn-primary form-control" onclick="return melihatJadwal();">Cari</a>
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                              <a class="btn btn-primary form-control" onclick="return melihatJadwal();">Cari</a>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -59,106 +60,104 @@
                     </div>
                   </div>
                 </div>
+              <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;" id="datajadwal">              
               </div>
-            <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;" id="datajadwal">
-              
             </div>
           </div>
         </div>
-      </div>
-    </div> -->
-  </section>
+      </div> -->
+    </section>
   @endforeach
   <form class="form" action="{{route('add_sewa')}}" method="post">
   @csrf
-  <section id="multiple-column-form">
-    <div class="row match-height">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Form Penyewaan</h4>
-          </div>
-          <div class="card-content">
-            <div class="card-body">
+    <section id="multiple-column-form">
+      <div class="row match-height">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Form Penyewaan</h4>
+            </div>
+            <div class="card-content">
+              <div class="card-body">
                 <div class="row">
                   <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
                   <input type="hidden" name="name" value="{{Auth::user()->name}}">
                   <input type="hidden" name="email" value="{{Auth::user()->email}}">
                   @foreach($lengkap as $lkp)
-                  <input type="hidden" name="phone" value="{{$lkp->no_telp}}">
+                    <input type="hidden" name="phone" value="{{$lkp->no_telp}}">
                   @endforeach
                   @auth
                   @if(auth()->user()->member == '1')
-                  <input type="hidden" id="member" name="" value="1">
+                    <input type="hidden" id="member" name="" value="1">
                   @else
-                  <input type="hidden" id="member" name="" value="0">
+                    <input type="hidden" id="member" name="" value="0">
                   @endif
                   @endauth
                   @foreach($disc as $diskon)
                     @if($diskon->nama_diskon == 'Member / Pelajar')
-                    <input type="hidden" id="diskon" name="diskon" value="{{$diskon->hargadiskon}}">
+                      <input type="hidden" id="diskon" name="diskon" value="{{$diskon->hargadiskon}}">
                     @endif
                   @endforeach
                   @foreach($data as $dt)
-                  <input type="hidden" id="lapangan" name="lap_id" value="{{$dt->id_lapangan}}">
-                  <input type="hidden" name="tanggal" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="last-name-column">Metode Pembayaran</label>
-                      <select class="choices form-select" id="selectOption" name="id_payment">
-                        @foreach($pay as $payment)
-                        @if($payment->dp == '0.00')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 0%</option>
-                        @endif
-                        @if($payment->dp == '0.10')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 10%</option>
-                        @endif
-                        @if($payment->dp == '0.20')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 20%</option>
-                        @endif
-                        @if($payment->dp == '0.30')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 30%</option>
-                        @endif
-                        @if($payment->dp == '0.40')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 40%</option>
-                        @endif
-                        @if($payment->dp == '0.50')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 50%</option>
-                        @endif
-                        @if($payment->dp == '0.60')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 60%</option>
-                        @endif
-                        @if($payment->dp == '0.70')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 70%</option>
-                        @endif
-                        @if($payment->dp == '0.80')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 80%</option>
-                        @endif
-                        @if($payment->dp == '0.90')
-                        <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 90%</option>
-                        @endif
-                        @endforeach
-                      </select>
+                    <input type="hidden" id="lapangan" name="lap_id" value="{{$dt->id_lapangan}}">
+                    <input type="hidden" name="tanggal" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="last-name-column">Metode Pembayaran</label>
+                        <select class="choices form-select" id="selectOption" name="id_payment">
+                          @foreach($pay as $payment)
+                          @if($payment->dp == '0.00')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 0%</option>
+                          @endif
+                          @if($payment->dp == '0.10')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 10%</option>
+                          @endif
+                          @if($payment->dp == '0.20')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 20%</option>
+                          @endif
+                          @if($payment->dp == '0.30')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 30%</option>
+                          @endif
+                          @if($payment->dp == '0.40')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 40%</option>
+                          @endif
+                          @if($payment->dp == '0.50')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 50%</option>
+                          @endif
+                          @if($payment->dp == '0.60')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 60%</option>
+                          @endif
+                          @if($payment->dp == '0.70')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 70%</option>
+                          @endif
+                          @if($payment->dp == '0.80')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 80%</option>
+                          @endif
+                          @if($payment->dp == '0.90')
+                          <option value="{{$payment->id_payment}}" data-dp="{{$payment->dp}}">{{$payment->metode_payment}} = DP 90%</option>
+                          @endif
+                          @endforeach
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="namapb">Nama Klub</label>
-                      <input type="text" id="namapb" required class="form-control" name="namapb">
-                      <div id="nama_pb"></div>
+                    <div class="col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="namapb">Nama Klub</label>
+                        <input type="text" id="namapb" required class="form-control" name="namapb">
+                        <div id="nama_pb"></div>
+                      </div>
                     </div>
-                  </div>
-                  <input type="hidden" id="total" name="total" value="">
-                  <input type="hidden" id="dp" name="dp" value="">
-                  <input type="hidden" id="nyoba" value="">
-                  <input type="hidden" id="hargaPagi" name="harga_pagi" value="{{$dt->harga_pagi}}">
-                  <input type="hidden" id="hargaMalam" name="harga_malam" value="{{$dt->harga_malam}}">
+                    <input type="hidden" id="total" name="total" value="">
+                    <input type="hidden" id="dp" name="dp" value="">
+                    <input type="hidden" id="nyoba" value="">
+                    <input type="hidden" id="hargaPagi" name="harga_pagi" value="{{$dt->harga_pagi}}">
+                    <input type="hidden" id="hargaMalam" name="harga_malam" value="{{$dt->harga_malam}}">
                   @endforeach
                   @foreach($data as $dt)
-                  <input type="hidden" name="id_lap1" value="{{$dt->id_lapangan}}">
-                  <input type="hidden" name="hari1" value="Hari 1">
-                  <input type="hidden" name="id_lap2" value="{{$dt->id_lapangan}}">
-                  <input type="hidden" name="hari2" value="Hari 2">
+                    <input type="hidden" name="id_lap1" value="{{$dt->id_lapangan}}">
+                    <input type="hidden" name="hari1" value="Hari 1">
+                    <input type="hidden" name="id_lap2" value="{{$dt->id_lapangan}}">
+                    <input type="hidden" name="hari2" value="Hari 2">
                   @endforeach
                   <div class="col-md-4 col-12">
                     <div class="form-group">
@@ -172,7 +171,7 @@
                       <label for="last-name-column">Jam Mulai</label> 
                       <select class="choices form-select" name="jam_mulai1" id="jam_mulai1">
                         @foreach($jam as $jmm)
-                        <option value="{{$jmm->jam_mulai}}">{{ \Carbon\Carbon::parse($jmm->jam_mulai)->format('H:i') }}</option>
+                          <option value="{{$jmm->jam_mulai}}">{{ \Carbon\Carbon::parse($jmm->jam_mulai)->format('H:i') }}</option>
                         @endforeach
                       </select>
                       <div style="text-align: left;">
@@ -185,7 +184,7 @@
                       <label for="last-name-column">Jam Selesai</label> 
                       <select class="choices form-select" name="jam_selesai1" id="jam_selesai1">
                         @foreach($jam as $jmm)
-                        <option value="{{$jmm->jam_selesai}}">{{ \Carbon\Carbon::parse($jmm->jam_selesai)->format('H:i') }}</option>
+                          <option value="{{$jmm->jam_selesai}}">{{ \Carbon\Carbon::parse($jmm->jam_selesai)->format('H:i') }}</option>
                         @endforeach
                       </select>
                       <p id="notif_selesai1"></p>
@@ -201,29 +200,30 @@
                     </div>
                     @endif
                     @if($lkp->ktp!==NULL)
-                    <div class="col-md-3 col-12">
-                      <div class="form-group">
-                        <!-- <button type="submit"
-                        class="btn btn-primary mt-4 form-control">Pesan</button> -->
-                        <a class="btn btn-primary mt-4 form-control" 
-                        onclick="return cek_jadwal();">Pesan</a>
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                          <!-- <button type="submit"
+                          class="btn btn-primary mt-4 form-control">Pesan</button> -->
+                          <a class="btn btn-primary mt-4 form-control" 
+                          onclick="return cek_jadwal();">Pesan</a>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                      <div class="form-group">
-                      <button type="reset"
-                      class="btn btn-light-secondary mt-4 form-control reset">Reset</button>
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                        <button type="reset"
+                        class="btn btn-light-secondary mt-4 form-control reset">Reset</button>
+                        </div>
                       </div>
-                    </div>
                     @endif
                     @endforeach
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </div>
-  </section>
+    </section>
   </form>
 </div>
           

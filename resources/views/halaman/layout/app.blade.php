@@ -9,16 +9,17 @@
 </head>
 <body id="top">
 	<?php 
-	$profil=DB::table('profil')->get();
+		$profil = DB::table('profil')->get();
 	?>
+
 	@foreach($profil as $pf)
 	@include('halaman/layout/sidebar')
-
 
 	@yield('content')
 
 	@include('halaman/layout/footer')
 	@endforeach
+
 	<a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
 	<!-- JAVASCRIPTS -->
 	<script src="{{asset('home/layout/scripts/jquery.min.js')}}"></script>

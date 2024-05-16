@@ -2,15 +2,14 @@
 @section('title','Visit Lapangan')
 @section('content')
 <div class="bgded overlay light" style="background-image:url('{{asset('bg.png')}}');">
-  <section id="services" class="hoc container clear"> 
-    <!-- ################################################################################################ -->
+  <section id="services" class="hoc container clear">
     <div class="sectiontitle">
       <p class="nospace font-xs" style="font-size: 20px;">Data Jadwal</p>
       @foreach($lapangan as $lp)
       <h6 class="heading font-x2" style="font-size: 50px;">{{$lp->nama_lap}}</h6>
       @endforeach
       <div class="form-group" style="display: inline-block;">
-          <form class="input-group" action="" >
+        <form class="input-group" action="" >
           <input type="date" 
                   class="form-control" 
                   name="search" 
@@ -32,32 +31,28 @@
                         margin-top: 10px;">
             Cari
           </button>
-
-          </form>
+        </form>
       </div>
     </div>
-    <!-- ################################################################################################ -->
   </section>
-  
   <section id="services" class="hoc container clear" style="margin-top: -200px;">
-  <ul class="nospace group elements elements-three">
-    <!-- <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(10px, 1fr)); grid-gap: 10px;"> -->
-    <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px;">
-      @foreach($penanda_jam as $jam => $info)
-        <article style="background-color: 
-          @if(is_array($info))
-            {{ $info['color'] }}
-          @else
-            {{ $info }}
-          @endif">
-          <p style="font-weight: bold; font-size: 20px; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($jam)->format('H:i') }}</p>
-          @if(is_array($info))
-            <p>{{ $info['namapb'] }}</p>
-          @endif
-        </article>
-      @endforeach
-    </div>
-  </ul>
+    <ul class="nospace group elements elements-three">
+      <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px;">
+        @foreach($penanda_jam as $jam => $info)
+          <article style="background-color: 
+            @if(is_array($info))
+              {{ $info['color'] }}
+            @else
+              {{ $info }}
+            @endif">
+            <p style="font-weight: bold; font-size: 20px; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($jam)->format('H:i') }}</p>
+            @if(is_array($info))
+              <p>{{ $info['namapb'] }}</p>
+            @endif
+          </article>
+        @endforeach
+      </div>
+    </ul>
   </section>
   <section id="services" class="hoc container clear" style="margin-top: -100px;">
     <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 0fr)); grid-gap: -10px;">

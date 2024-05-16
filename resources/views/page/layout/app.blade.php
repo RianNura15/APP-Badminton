@@ -12,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('template/dist/assets/css/bootstrap.css')}}">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="{{asset('template/dist/assets/vendors/iconly/bold.css')}}">
     <link rel="stylesheet" href="{{asset('template/dist/assets/vendors/simple-datatables/style.css')}}">
@@ -44,7 +44,6 @@
     <script src="{{asset('template/dist/assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('template/dist/assets/vendors/simple-datatables/simple-datatables.js')}}"></script>
     <script>
-        // Simple Datatable
         let table1 = document.querySelector('#table1');
         let dataTable = new simpleDatatables.DataTable(table1);
     </script>
