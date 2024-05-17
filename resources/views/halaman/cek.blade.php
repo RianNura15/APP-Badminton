@@ -44,7 +44,7 @@
               {{ $info['color'] }}
             @else
               {{ $info }}
-            @endif">
+            @endif;">
             <p style="font-weight: bold; font-size: 20px; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($jam)->format('H:i') }}</p>
             @if(is_array($info))
               <p>{{ $info['namapb'] }}</p>

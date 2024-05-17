@@ -110,10 +110,8 @@ class UserController extends Controller
 		$search = $request['search'] ?? "";
 		$lapangan = Nama_lapangan::where('id_lapangan', $id_lapangan)->get();
 		if ($search != "") {
-			// Daftar jam dari 08:00 sampai 22:00
 			$daftar_jam = Jam::with('nama_lapangan')->where('jam.lapangan_id',$id_lapangan)->pluck('jam_mulai')->toArray();
-	
-			// Daftar jadwal
+
 			$jadwal = Jadwal::with('data_sewa')
 								->where('data_jadwal.id_lap', $id_lapangan)
 								->where('tanggalmain', 'LIKE', "%$search%")
@@ -156,7 +154,29 @@ class UserController extends Controller
 						} else if ($j->keterangan == '-') {
 							$penanda_jam[$jam] = ['color' => 'yellow', 'namapb' => $j->data_sewa->namapb];
 						} else if ($j->keterangan == 'Mulai') {
-							$penanda_jam[$jam] = ['color' => '#0078D7', 'namapb' => $j->data_sewa->namapb];
+							$interval_start = strtotime($j->jam_mulai);
+							$interval_end = strtotime($j->jam_selesai);
+							$current_time = strtotime(date('H:i:s'));
+
+							$interval_colors = [];
+							for ($i = $interval_start; $i < $interval_end; $i += 3600) {
+								$interval_colors[date('H:i:s', $i)] = 'red';
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								if ($current_time >= strtotime($interval_time) && $current_time < strtotime('+1 hour', strtotime($interval_time))) {
+									$interval_colors[$interval_time] = '#0078D7';
+								} elseif ($current_time < strtotime($interval_time)) {
+									break;
+								} else {
+									$interval_colors[$interval_time] = '#383838';
+								}
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								$namapb = ($color == '#383838') ? 'Tidak Tersedia' : $j->data_sewa->namapb;
+								$penanda_jam[$interval_time] = ['color' => $color, 'namapb' => $namapb];
+							}
 						}
 					}
 				}
@@ -199,7 +219,29 @@ class UserController extends Controller
 						} else if ($j->keterangan == '-') {
 							$penanda_jam[$jam] = ['color' => 'yellow', 'namapb' => $j->data_sewa->namapb];
 						} else if ($j->keterangan == 'Mulai') {
-							$penanda_jam[$jam] = ['color' => '#0078D7', 'namapb' => $j->data_sewa->namapb];
+							$interval_start = strtotime($j->jam_mulai);
+							$interval_end = strtotime($j->jam_selesai);
+							$current_time = strtotime(date('H:i:s'));
+
+							$interval_colors = [];
+							for ($i = $interval_start; $i < $interval_end; $i += 3600) {
+								$interval_colors[date('H:i:s', $i)] = 'red';
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								if ($current_time >= strtotime($interval_time) && $current_time < strtotime('+1 hour', strtotime($interval_time))) {
+									$interval_colors[$interval_time] = '#0078D7';
+								} elseif ($current_time < strtotime($interval_time)) {
+									break;
+								} else {
+									$interval_colors[$interval_time] = '#383838';
+								}
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								$namapb = ($color == '#383838') ? 'Tidak Tersedia' : $j->data_sewa->namapb;
+								$penanda_jam[$interval_time] = ['color' => $color, 'namapb' => $namapb];
+							}
 						}
 					}
 				}
