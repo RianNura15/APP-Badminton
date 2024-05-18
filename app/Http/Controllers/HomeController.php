@@ -15,11 +15,12 @@ use App\Models\Image_lapangan;
 use App\Models\Jenis_lapangan;
 use App\Models\PB;
 use App\Models\Jadwal;
-use App\Models\Nama_lapagan;
+use App\Models\Nama_lapangan;
 use App\Models\Payment;
 use App\Models\Pembayaran;
 use App\Models\Peralatan;
 use App\Models\Profil;
+use App\Models\Jam;
 
 class HomeController extends Controller
 {

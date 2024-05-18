@@ -15,7 +15,7 @@
 <div class="page-heading">
   @foreach ($data as $dt)
     <section class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-6">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -27,31 +27,33 @@
               <h4 class="card-title">Pagi = Rp. {{number_format($dt->harga_pagi,0,",",".")}}/jam</h4>
               <h4 class="card-title">Malam = Rp. {{number_format($dt->harga_malam,0,",",".")}}/jam</h4>
               @endif
-              <img src="{{asset('gambar')}}/{{$dt->gambar}}" style="max-height: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
+              <img src="{{asset('gambar')}}/{{$dt->gambar}}" style="max-height: 220px; border: 5px solid #435EBE; border-radius: 10px; margin-bottom: 43px;" class="img-fluid" alt="">
             </div>
           </div>
         </div>
       </div>
-      <!-- <div class="col-lg-6">
+      <div class="col-lg-6">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-              <section id="multiple-column-form" style="">
+              <section id="multiple-column-form">
                 <div class="row match-height">
                   <div class="col-12">
                     <div class="card">
                       <div class="card-content">
-                        <h4 class="card-title">Jadwal</h4>
+                        <h4 class="card-title">Jadwal {{$dt->nama_lap}}</h4>
                         <div class="card-body">
                           <div class="row">
-                            <div class="col-md-6 col-12">
-                              <div class="form-group">
-                                <input type="date" id="" class="form-control" name="" value="{{ date('Y-m-d')}}">
+                            <div class="input-group">
+                              <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                  <input type="date" id="search" class="form-control" name="search">
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                              <div class="form-group">
-                              <a class="btn btn-primary form-control" onclick="return melihatJadwal();">Cari</a>
+                              <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                  <button class="btn btn-primary form-control" id="searchButton">Cari</button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -60,12 +62,13 @@
                     </div>
                   </div>
                 </div>
-              <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;" id="datajadwal">              
+              </section>
+              <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;" id="gridContainer">              
               </div>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </section>
   @endforeach
   <form class="form" action="{{route('add_sewa')}}" method="post">
@@ -226,7 +229,53 @@
     </section>
   </form>
 </div>
-          
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search');
+        searchInput.value = new Date().toISOString().slice(0, 10);
+        fetchData();
+
+        document.getElementById('searchButton').addEventListener('click', function() {
+            fetchData();
+        });
+    });
+
+    function fetchData() {
+        const search = document.getElementById('search').value || new Date().toISOString().slice(0, 10);
+        const idLapangan = $('#lapangan').val();
+
+        fetch(`/cekjadwal/${idLapangan}?search=${search}`)
+            .then(response => response.json())
+            .then(data => {
+                const gridContainer = document.getElementById('gridContainer');
+                gridContainer.innerHTML = '';
+
+                const penandaJam = data.penanda_jam;
+
+                Object.keys(penandaJam).forEach(jam => {
+                    const info = penandaJam[jam];
+                    const span = document.createElement('span');
+                    span.classList.add('badge');
+                    span.classList.add(getBadgeClass(info.color));
+                    span.innerHTML = `<strong>${jam.slice(0, 5)}</strong><br>${info.namapb}`;
+                    gridContainer.appendChild(span);
+                });
+            });
+    }
+
+    function getBadgeClass(color) {
+        switch (color) {
+            case 'LimeGreen': return 'bg-success';
+            case 'red': return 'bg-danger';
+            case 'yellow': return 'bg-warning';
+            case '#0078D7': return 'bg-primary';
+            case '#383838': return 'bg-secondary';
+            default: return 'bg-secondary';
+        }
+    }
+</script>
+
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function() {
       let harga_pagiString = $('#hargaPagi').val();
@@ -243,31 +292,6 @@
       document.getElementById("harga_pagi").innerText = `Pagi (Member) = Rp. ${hasilHargaPagi.toLocaleString('id-ID')}/jam`;
       document.getElementById("harga_malam").innerText = `Malam (Member) = Rp. ${hasilHargaMalam.toLocaleString('id-ID')}/jam`;
   });
-  
-  function melihatJadwal() {
-    let id_lapangan = $('#lapangan').val();
-    fetch(`/datajadwal/${id_lapangan}`).then(response => response.json()).then(data => {
-      let daftarJam = data[0]
-      let jadwal = data[1]
-      
-      const jamContainer = document.getElementById('datajadwal');
-      jamContainer.innerHTML = '';
-
-      // Loop melalui setiap elemen di dalam daftarJam
-      daftarJam.forEach(item => {
-          let jamMulai = item.jam_mulai.substring(0, 5)
-          // Buat elemen span untuk setiap jam
-          const spanElement = document.createElement('span');
-          spanElement.textContent = jamMulai; // Teks span adalah nilai jam
-          spanElement.classList.add('badge', 'bg-success'); // Tambahkan kelas
-          spanElement.style.padding = '5px'; // Gaya padding
-          spanElement.style.fontSize = '18px'; // Gaya font-size
-
-          // Tambahkan elemen span ke dalam elemen div dengan id 'datajadwal'
-          jamContainer.appendChild(spanElement);
-      });
-    })
-  }
 
   function cek_jadwal() {
     fetch('/ambildata').then(response => response.json()).then(data => {

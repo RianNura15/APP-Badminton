@@ -94,58 +94,122 @@
             </div>
         </div>
     </section>
-    <div class="card">
-        <div class="card-header">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Jadwal</h3>
+    <section class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <section id="multiple-column-form">
+                                <div class="row match-height">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <h4 class="card-title">Jadwal</h4>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-group">
+                                                                <input type="date" id="search" class="form-control" name="search">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-group">
+                                                                <a class="btn btn-primary form-control" id="searchButton">Cari</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;">
+                                    <span class="badge bg-success" style="padding: 5px; font-size: 18px;"></span>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped" id="table1">
-                <thead>
-                    <tr>
-                        <th>No. </th>
-                        <th>No Transaksi</th>
-                        <th>Nama Lapangan</th>
-                        <th>Nama Penyewa</th>
-                        <th>Nama PB/Klub</th>
-                        <th>Tanggal Main</th>
-                        <th>Jam Main</th>
-                        <th>Lama Sewa</th>
-                        <th>Keterangan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $nul = 0; ?>
-                    <?php $no = 1; ?>
-                    @foreach($data as $dt)
-                        <?php date_default_timezone_set('Asia/Jakarta');
-                        $mulai = strtotime($dt->jam_mulai);
-                        $selesai = strtotime($dt->jam_selesai);
-                        $dif = $selesai - $mulai;
-                        $jam = floor($dif/(60*60));
-                        $menit = $dif - $jam*(60*60);
-                        $menit2 = floor($menit/60);
-                        if ($menit2 >= 30) {
-                            $jam += 1;
-                        }
-                        ?>
-                        <tr>
-                            <td>{{$no}}. </td>
-                            <td>TRS-{{$dt->id_datasewa}}</td>
-                            <td>{{$dt->data_sewa->nama_lap}}</td>
-                            <td>{{$dt->data_sewa->name}}</td>
-                            <td>{{$dt->data_sewa->namapb}}</td>
-                            <td>{{$dt->tanggalmain}}</td>
-                            <td>{{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }}</td>
-                            <td>{{$jam}} Jam</td>
-                            <td>{{$dt->keterangan}}</td>
-                        </tr>
-                        <?php $no++ ?>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+    </section>
+    <div id="lapanganContainer"></div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search');
+        searchInput.value = new Date().toISOString().slice(0, 10);
+        fetchData();
+
+        document.getElementById('searchButton').addEventListener('click', function() {
+            fetchData();
+        });
+    });
+
+    function fetchData() {
+        const search = document.getElementById('search').value || new Date().toISOString().slice(0, 10);
+
+        fetch(`/adminjadwal?search=${search}`)
+            .then(response => response.json())
+            .then(data => {
+                const lapanganContainer = document.getElementById('lapanganContainer');
+                lapanganContainer.innerHTML = '';
+
+                Object.keys(data).forEach(id_lapangan => {
+                    const lapangan = data[id_lapangan];
+                    const penandaJam = lapangan.penanda_jam;
+
+                    const lapanganSection = document.createElement('section');
+                    lapanganSection.classList.add('row');
+                    lapanganSection.innerHTML = `
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <section id="multiple-column-form">
+                                            <div class="row match-height">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-content">
+                                                            <h4 class="card-title">${lapangan.nama_lapangan}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="grid text-center" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); grid-gap: 10px; margin-top: -30px;"> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const gridDiv = lapanganSection.querySelector('.grid');
+
+                    Object.keys(penandaJam).forEach(jam => {
+                        const info = penandaJam[jam];
+                        const span = document.createElement('span');
+                        span.classList.add('badge');
+                        span.classList.add(getBadgeClass(info.color));
+                        span.innerHTML = `<strong>${jam.slice(0, 5)}</strong><br>${info.namapb}`;
+                        gridDiv.appendChild(span);
+                    });
+
+                    lapanganContainer.appendChild(lapanganSection);
+                });
+            });
+    }
+
+    function getBadgeClass(color) {
+        switch (color) {
+            case 'LimeGreen': return 'bg-success';
+            case 'red': return 'bg-danger';
+            case 'yellow': return 'bg-warning';
+            case '#0078D7': return 'bg-primary';
+            case '#383838': return 'bg-secondary';
+            default: return 'bg-secondary';
+        }
+    }
+</script>
 @endsection

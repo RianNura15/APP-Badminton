@@ -92,6 +92,95 @@ class AdminController extends Controller
     	return redirect('/login');
     }
 
+	public function dashboardJadwal(Request $request)
+	{   
+		$search = $request['search'] ?? date('Y-m-d');
+		$lapanganList = Nama_lapangan::all();
+		$result = [];
+
+		foreach ($lapanganList as $lapangan) {
+			$id_lapangan = $lapangan->id_lapangan;
+			$daftar_jam = Jam::with('nama_lapangan')->where('jam.lapangan_id', $id_lapangan)->pluck('jam_mulai')->toArray();
+
+			$jadwal = Jadwal::with('data_sewa')
+								->where('data_jadwal.id_lap', $id_lapangan)
+								->where('tanggalmain', 'LIKE', "%$search%")
+								->where(function($query) {
+									$query->where('keterangan', '-')
+										->orWhere('keterangan', 'Mulai')
+										->orWhere('keterangan', 'Aktif');
+								})
+								->get();
+
+			$today = date('Y-m-d');
+			
+			if ($search >= $today) {
+				$penanda_jam = array_fill_keys($daftar_jam, ['color' => 'LimeGreen', 'namapb' => 'Tersedia']);            
+			} else if ($search < $today) {
+				$penanda_jam = array_fill_keys($daftar_jam, ['color' => '#383838', 'namapb' => 'Tidak Tersedia']);
+			}
+
+			$penetapanwaktu = strtotime(date('08:00:00'));
+			$waktu = strtotime(date('H:i:s'));
+
+			for ($j = $penetapanwaktu; $j < $waktu; $j += 60) { 
+				$hasiljam = date('H:i:s', $j);
+				if ($search == $today) {
+					if (array_key_exists($hasiljam, $penanda_jam)) {
+						$penanda_jam[$hasiljam] = ['color' => '#383838', 'namapb' => 'Tidak Tersedia'];
+					}
+				}
+			}
+
+			foreach ($jadwal as $j) {
+				$jam_mulai = strtotime($j->jam_mulai);
+				$jam_selesai = strtotime($j->jam_selesai);
+				
+				for ($i = $jam_mulai; $i < $jam_selesai; $i += 3600) { 
+					$jam = date('H:i:s', $i);
+					if (array_key_exists($jam, $penanda_jam)) {
+						if ($j->keterangan == 'Aktif') {
+							$penanda_jam[$jam] = ['color' => 'red', 'namapb' => $j->data_sewa->namapb];
+						} else if ($j->keterangan == '-') {
+							$penanda_jam[$jam] = ['color' => 'yellow', 'namapb' => $j->data_sewa->namapb];
+						} else if ($j->keterangan == 'Mulai') {
+							$interval_start = strtotime($j->jam_mulai);
+							$interval_end = strtotime($j->jam_selesai);
+							$current_time = strtotime(date('H:i:s'));
+
+							$interval_colors = [];
+							for ($i = $interval_start; $i < $interval_end; $i += 3600) {
+								$interval_colors[date('H:i:s', $i)] = 'red';
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								if ($current_time >= strtotime($interval_time) && $current_time < strtotime('+1 hour', strtotime($interval_time))) {
+									$interval_colors[$interval_time] = '#0078D7';
+								} elseif ($current_time < strtotime($interval_time)) {
+									break;
+								} else {
+									$interval_colors[$interval_time] = '#383838';
+								}
+							}
+
+							foreach ($interval_colors as $interval_time => $color) {
+								$namapb = ($color == '#383838') ? 'Tidak Tersedia' : $j->data_sewa->namapb;
+								$penanda_jam[$interval_time] = ['color' => $color, 'namapb' => $namapb];
+							}
+						}
+					}
+				}
+			}
+
+			$result[$id_lapangan] = [
+				'nama_lapangan' => $lapangan->nama_lap,
+				'penanda_jam' => $penanda_jam,
+			];
+		}
+
+		return response()->json($result);
+	}
+
 	public function jenis_lapangan()
 	{
 		$data = DB::table('jenis_lapangan')->get();
