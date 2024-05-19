@@ -16,6 +16,7 @@
                             <th>No. </th>
                             <th>ID Transaksi</th>
                             <th>Nama Lapangan</th>
+                            <th>Nama Sewa / Klub</th>
                             <th>Tempo</th>
                             <th>Tanggal Main</th>
                             <th>Jam Main</th>
@@ -36,6 +37,7 @@
                                 <td>{{$no}}. </td>
                                 <td>TRS-{{$dt->id_datasewa}}</td>
                                 <td>{{$dt->data_sewa->nama_lap}}</td>
+                                <td>{{$dt->data_sewa->namapb}}</td>
                                 <td>
                                     @if($dt->keterangan=='-')
                                     {{ \Carbon\Carbon::parse($dt->expired)->diffForHumans() }}
@@ -57,23 +59,23 @@
                                 <td>{{ \Carbon\Carbon::parse($dt->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($dt->jam_selesai)->format('H:i') }} WIB</td>
                                 <td>{{$jam}} Jam</td>
                                 <td>
-                                    @if($dt->keterangan=='Pending')
-                                    <span class="badge bg-warning">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Pending')
+                                        <span class="badge bg-warning">{{$dt->keterangan}}</span>
                                     @endif
-                                    @if($dt->keterangan=='Aktif')
-                                    <span class="badge bg-primary">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Aktif')
+                                        <span class="badge bg-primary">{{$dt->keterangan}}</span>
                                     @endif
-                                    @if($dt->keterangan=='Selesai')
-                                    <span class="badge bg-success">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Selesai')
+                                        <span class="badge bg-success">{{$dt->keterangan}}</span>
                                     @endif
-                                    @if($dt->keterangan=='Di Batalkan Admin' || $dt->keterangan=='Di Batalkan Pelanggan')
-                                    <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Di Batalkan Admin' || $dt->keterangan == 'Di Batalkan Pelanggan')
+                                        <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                     @endif
-                                    @if($dt->keterangan=='Expired')
-                                    <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Expired')
+                                        <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                     @endif
-                                    @if($dt->keterangan=='Mulai')
-                                    <span class="badge bg-info">{{$dt->keterangan}}</span>
+                                    @if($dt->keterangan == 'Mulai')
+                                        <span class="badge bg-info">{{$dt->keterangan}}</span>
                                     @endif
                                 </td>
                             </tr>

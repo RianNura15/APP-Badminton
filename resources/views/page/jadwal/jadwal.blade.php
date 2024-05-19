@@ -15,7 +15,7 @@
                             <th>No. Transaksi</th>
                             <th>Nama Lapangan</th>
                             <th>Nama Penyewa</th>
-                            <th>Nama PB/Klub</th>
+                            <th>Nama Sewa/Klub</th>
                             <th>Jatuh Tempo</th>
                             <th>Tanggal Main</th>
                             <th>Jam Main</th>

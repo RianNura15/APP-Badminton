@@ -145,7 +145,7 @@
                     </div>
                     <div class="col-md-6 col-12">
                       <div class="form-group">
-                        <label for="namapb">Nama Klub</label>
+                        <label for="namapb">Nama Sewa / Klub</label>
                         <input type="text" id="namapb" required class="form-control" name="namapb">
                         <div id="nama_pb"></div>
                       </div>
@@ -1302,6 +1302,18 @@
 
       let totalDp = document.getElementById("dp");
       totalDp.value = result;
+
+      function toPercentage(value) {
+        return (value * 100).toFixed(0) + '%';
+      }
+
+      let dpPercentage = toPercentage(dpValue);
+      let keteranganBayar = '';
+      if (paymentId === '1') {
+        keteranganBayar = `<span class="badge bg-info">Bayar di Tempat (DP Online ${dpPercentage} Dahulu)</span>`;
+      } else {
+        keteranganBayar = `<span class="badge bg-primary">Bayar Online (Full)</span>`;
+      }
       
       // console.log("Payment ID:", paymentId);
       // console.log("DP Value:", dpValue);
@@ -1315,6 +1327,22 @@
       // let waktuString = detikKeWaktu(jumlahDetik);
 
       // let totalHarga = cost * waktuString;
+
+      function formatDate(tanggal) {
+        const bulanInggris = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        const date = new Date(tanggal);
+        const hari = date.getDate();
+        const bulan = bulanInggris[date.getMonth()];
+        const tahun = date.getFullYear();
+        return `${hari} ${bulan} ${tahun}`;
+      }
+
+      function formatTime(waktu) {
+        return waktu.substring(0, 5);
+      }
 
       let err = 0
       if ($('#namapb').length > 0) {
@@ -1398,21 +1426,44 @@
         Swal.fire({
           icon: "success",
           title: "Lapangan Tersedia",
-          html: `<br><p style="font-weight: bold; font-size: 18px;">Informasi Booking :</p> 
-                <table style="width: 100%;">
-                  <tr>
-                    <th style="padding: 6px;">Tanggal :</th>
-                    <th style="padding: 6px;">Jam :</th>
-                    <th style="padding: 6px;">DP :</th>
-                    <th style="padding: 6px;">Harga :</th>
-                  </tr>
-                  <tr>
-                    <td style="padding: 6px;">${tanggal1}</td>
-                    <td style="padding: 6px;">${jamMulai1} - ${jamSelesai1} WIB</td>
-                    <td style="padding: 6px;">${'Rp. ' + result.toLocaleString('id-ID')}</td>
-                    <td style="padding: 6px;">${'Rp. ' + totalPrice.toLocaleString('id-ID')}</td>
-                  </tr>
-                </table>`,
+          html: `
+                <br>
+                <p style="font-weight: bold; font-size: 18px;">Informasi Booking :</p>
+                <div style="width: 100%; overflow-x: auto;">
+                  <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">Keterangan</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${keteranganBayar}</td>
+                    </tr>
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">Nama Sewa / Klub</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${namaPB}</td>
+                    </tr>
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">Tanggal Main</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${formatDate(tanggal1)}</td>
+                    </tr>
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">Jam Main</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${formatTime(jamMulai1)} - ${formatTime(jamSelesai1)} WIB</td>
+                    </tr>
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">DP</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${'Rp. ' + result.toLocaleString('id-ID')}</td>
+                    </tr>
+                    <tr style="display: flex; justify-content: space-between;">
+                      <td style="flex: 1; min-width: 100px; padding: 5px;">Harga</td>
+                      <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                      <td style="flex: 2; min-width: 150px; padding: 5px;">${'Rp. ' + totalPrice.toLocaleString('id-ID')}</td>
+                    </tr>
+                  </table>
+                </div>
+          `,
           confirmButtonText: 'Booking'
         }).then((result) => {
           if (result.isConfirmed) {

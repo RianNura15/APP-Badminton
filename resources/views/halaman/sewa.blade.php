@@ -72,6 +72,7 @@
                                         <th>No. </th>
                                         <th>No. Transaksi</th>
                                         <th>Nama Lapangan</th>
+                                        <th>Nama Sewa/Klub</th>
                                         <th>Jadwal</th>
                                         <th>Tanggal</th>
                                         <th>Jatuh Tempo</th>
@@ -86,22 +87,21 @@
                                     <?php $no = 1; ?>
                                     @foreach($data as $dt)
                                         <?php date_default_timezone_set('Asia/Jakarta');
-                                        $mulai = strtotime($dt->jam_mulai);
-                                        $selesai = strtotime($dt->jam_selesai);
+                                        $mulai = strtotime($dt->data_jadwal->jam_mulai);
+                                        $selesai = strtotime($dt->data_jadwal->jam_selesai);
                                         $dif = $selesai - $mulai;
                                         $jam = floor($dif/(60*60));
-                                        $menit = $dif-$jam*(60*60);
-                                        $menit2 = floor($menit/60);
-                                        if ($menit2 >= 30) {
-                                            $jam += 1;
-                                        }
                                         ?>
                                         <tr>
                                             <td>{{$no}}. </td>
                                             <td>TRS-{{$dt->id_sewa}}</td>
                                             <td>{{$dt->nama_lapangan->nama_lap}}</td>
+                                            <td>{{$dt->namapb}}</td>
                                             <td>
-                                                <a href="{{route('jadwal',$dt->id_sewa)}}"><span class="badge bg-primary">Lihat</span></a>
+                                                <button data-bs-toggle="modal" data-bs-target="#jadwal{{$dt->id_sewa}}" class="badge bg-primary">
+                                                    Lihat
+                                                </button>
+                                                @include('halaman/jadwalsewa')
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($dt->tanggal)->format('d F Y') }}</td>
                                             <td>
@@ -188,7 +188,7 @@
                                         </tr>
                                         <?php $no++ ?>
                                         @include('halaman/batal')
-                                        @include('halaman/detailsewa')
+                                        
                                         <div class="modal fade" id="member" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
                                             role="document">

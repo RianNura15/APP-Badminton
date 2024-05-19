@@ -15,7 +15,7 @@
                             <th>No. Transaksi</th>
                             <th>Penyewa</th>
                             <th>Nama Lapangan</th>
-                            <th>Nama PB/Klub</th>
+                            <th>Nama Sewa/Klub</th>
                             <th>Tanggal</th>
                             <th>Pembayaran</th>
                             <th>Jatuh Tempo</th>
