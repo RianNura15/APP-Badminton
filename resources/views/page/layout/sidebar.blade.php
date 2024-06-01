@@ -33,19 +33,11 @@
                         </a>
                     </li>
                     <li class="sidebar-title">Data Utama</li>
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item">
+                        <a href="{{route('sewa')}}" class='sidebar-link'>
                             <i class="bi bi-hourglass"></i>
                             <span>Data Penyewaan</span>
                         </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                                <a href="{{route('sewa')}}">Data Sewa</a>
-                            </li>
-                            <!-- <li class="submenu-item ">
-                                <a href="{{route('sewapb')}}">Data Sewa PB</a>
-                            </li> -->
-                        </ul>
                     </li>
                     <li class="sidebar-item  ">
                         <a href="{{route('datajadwal')}}" class='sidebar-link'>
@@ -84,19 +76,11 @@
                         </a>
                     </li>
                     <li class="sidebar-title">Data Penunjang</li>
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item">
+                        <a href="{{route('user')}}" class='sidebar-link'>
                             <i class="dripicons dripicons-user-group"></i>
                             <span>Data Pelanggan</span>
                         </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                                <a href="{{route('user')}}">Akun Pelanggan</a>
-                            </li>
-                            <li class="submenu-item ">
-                                <a href="{{route('pb')}}">Data PB</a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="sidebar-item  has-sub">
                         <a href="#" class='sidebar-link'>
@@ -112,16 +96,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item">
+                        <a href="{{route('payment')}}" class='sidebar-link'>
                             <i class="bi bi-wallet"></i>
                             <span>Metode Pembayaran</span>
                         </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                                <a href="{{route('payment')}}">Data Metode Pembayaran</a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="sidebar-title">Data Lain - Lain</li>
                     <!-- <li class="sidebar-item  has-sub">
@@ -135,16 +114,11 @@
                             </li>
                         </ul>
                     </li> -->
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
+                    <li class="sidebar-item">
+                        <a href="{{route('peralatan')}}" class='sidebar-link'>
                             <i class="dripicons dripicons-suitcase"></i>
                             <span>Data Peralatan</span>
                         </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                                <a href="{{route('peralatan')}}">Peralatan</a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="sidebar-title">Sign-Out</li>
                     <li class="sidebar-item  ">

@@ -208,7 +208,7 @@
                           <!-- <button type="submit"
                           class="btn btn-primary mt-4 form-control">Pesan</button> -->
                           <a class="btn btn-primary mt-4 form-control" 
-                          onclick="return cek_jadwal();">Pesan</a>
+                          onclick="return cek_jadwal();">Cek</a>
                         </div>
                       </div>
                       <div class="col-md-3 col-12">

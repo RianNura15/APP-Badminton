@@ -5,19 +5,12 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>DataTable Payment</h3>
+                <h3>Data Metode Pembayaran</h3>
             </div>
         </div>
     </div>
     <section class="section">
         <div class="card">
-            <div class="card-header">
-                With Data Kode Pembayaran
-                <!-- <button style="float: right;" type="button" class="btn btn-sm btn-outline-primary block"
-                data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                Tambah Data
-                </button> -->
-            </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">
                     <thead>
