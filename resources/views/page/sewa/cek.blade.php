@@ -45,6 +45,22 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        @foreach($data as $dt)
+                                            @csrf
+                                            <form class="form form-vertical" method="GET" action="{{route('hanyadp',$dt->id_sewa)}}">
+                                                <input type="hidden" name="nominal" value="{{$dt->dp}}">
+                                                @if($dt->keterangan == 'DP' && $dt->bukti_tf == 'DP Terbayar')
+                                                    <button class="btn btn-sm btn-outline-info form-control rounded-pill mt-4" onclick="return confirm('Yakin Hanya DP?')"> 
+                                                        <i class="icon dripicons-document-edit"></i>
+                                                    Hanya DP
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        @endforeach
+                                    </div>
+                                </div>
                                 <hr>
                                 @foreach($data as $dt)
                                     <div class="col-6">
@@ -175,6 +191,9 @@
                                         @if($dt->keterangan=='Expired')
                                             <span class="badge bg-danger">Sudah Expired</span>
                                         @endif
+                                        @if($dt->keterangan=='Hanya DP')
+                                            <span class="badge bg-danger">Hanya DP</span>
+                                        @endif
                                         @if($dt->keterangan=='Aktif' || $dt->keterangan=='Selesai' || $dt->keterangan=='Mulai')
                                             <span class="badge bg-primary">Clear</span>
                                         @endif
@@ -199,6 +218,9 @@
                                             <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                         @endif
                                         @if($dt->keterangan=='Expired')
+                                            <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                        @endif
+                                        @if($dt->keterangan=='Hanya DP')
                                             <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                         @endif
                                         @if($dt->keterangan=='Mulai')

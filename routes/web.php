@@ -112,6 +112,7 @@ Route::group(['middleware'=>['auth','ceklevel:Admin']],function()
 	Route::get('page/data_sewa/delete/{id_sewa}', [AdminController::class, 'deletesewa'])->name('deletesewa');
 	Route::post('page/data_sewa/cek_data/keterangan', [AdminController::class, 'keterangan'])->name('keterangan');
 	Route::get('page/data_sewa/cek_data/konfirmasi/{id_sewa}', [AdminController::class, 'konfirmasi'])->name('konfirmasi');
+	Route::get('page/data_sewa/cek_data/hanyadp/{id_sewa}', [AdminController::class, 'hanyadp'])->name('hanyadp');
 	Route::post('page/data_sewa/pembayaran/entry', [AdminController::class, 'entry'])->name('entry');
 	Route::get('page/data_sewa/cek_data/batalkan/{id_sewa}', [AdminController::class, 'batalkan'])->name('batalkan');
 	Route::get('page/data_sewa/expired/{id_sewa}', [AdminController::class, 'expired'])->name('expired');

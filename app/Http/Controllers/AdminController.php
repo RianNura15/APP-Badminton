@@ -806,6 +806,27 @@ class AdminController extends Controller
 		return redirect('page/data_sewa')->with('konfirmasi', '-');
 	}
 
+	public function hanyadp($id_sewa, Request $request)
+	{
+		Data_sewa::where('id_sewa', $id_sewa)->update([
+			'keterangan' => 'Hanya DP',
+		]);
+
+		Jadwal::where('id_datasewa', $id_sewa)->update([
+			'keterangan' => 'Hanya DP',
+			'status' => '0',
+		]);
+
+		Pembayaran::create([
+			'sewa_id' => $id_sewa,
+			'nominal' => $request->nominal,
+			'tanggal' => date("Y-m-d"),
+			'status_pembayaran' => 'Hanya DP',
+		]);
+
+		return redirect('page/data_sewa')->with('hanyadp', '-');
+	}
+
 	public function konfirmasipb($id_sewa, Request $request)
 	{
 		DB::table('data_sewa')->where('id_sewa', $id_sewa)->update([

@@ -40,6 +40,9 @@
                                     @if($dt->keterangan=='Expired')
                                         <span class="badge bg-danger">Sudah Expired</span>
                                     @endif
+                                    @if($dt->keterangan=='Hanya DP')
+                                        <span class="badge bg-danger">Hanya DP</span>
+                                    @endif
                                     @if($dt->keterangan=='Pending')
                                         <span class="badge bg-warning">Pending</span>
                                     @endif
@@ -68,6 +71,9 @@
                                         <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                     @endif
                                     @if($dt->keterangan=='Expired')
+                                        <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                    @endif
+                                    @if($dt->keterangan=='Hanya DP')
                                         <span class="badge bg-danger">{{$dt->keterangan}}</span>
                                     @endif
                                     @if($dt->keterangan=='Mulai')

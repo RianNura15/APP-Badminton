@@ -60,6 +60,9 @@
                                         @if($dt->data_jadwal->keterangan == 'Expired')
                                             <span class="badge bg-danger">{{$dt->data_jadwal->keterangan}}</span>
                                         @endif
+                                        @if($dt->data_jadwal->keterangan == 'Hanya DP')
+                                            <span class="badge bg-danger">{{$dt->data_jadwal->keterangan}}</span>
+                                        @endif
                                         @if($dt->data_jadwal->keterangan == 'Mulai')
                                             <span class="badge bg-info">{{$dt->data_jadwal->keterangan}}</span>
                                         @endif

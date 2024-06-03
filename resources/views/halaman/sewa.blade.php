@@ -123,6 +123,9 @@
                                                 @if($dt->keterangan=='DP' && $dt->bukti_tf=='DP Terbayar')
                                                 <span class="badge bg-info">DP</span>
                                                 @endif
+                                                @if($dt->keterangan=='Hanya DP' && $dt->bukti_tf=='DP Terbayar')
+                                                <span class="badge bg-info">Hanya DP</span>
+                                                @endif
                                             </td>
                                             <td>
                                                 @if($dt->bukti_tf=='Belum di Bayar')
@@ -150,6 +153,9 @@
                                                 @endif
                                                 @if($dt->keterangan=='DP')
                                                 <span class="badge bg-info">DP</span>
+                                                @endif
+                                                @if($dt->keterangan=='Hanya DP')
+                                                <span class="badge bg-info">Hanya DP</span>
                                                 @endif
                                             </td>
                                             <td>

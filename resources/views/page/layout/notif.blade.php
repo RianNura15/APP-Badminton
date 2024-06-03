@@ -463,6 +463,17 @@
 </script>
 @endif
 
+@if(session('hanyadp'))
+<script type="text/javascript">
+	document.getElementById('success');
+	Swal.fire({
+		icon: "success",
+		title: "Berhasil Mengubah Status Hanya DP",
+		text: "Mengubah Status",
+	});
+</script>
+@endif
+
 @if(session('pembayaran'))
 <script type="text/javascript">
 	document.getElementById('success');

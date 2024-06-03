@@ -59,6 +59,9 @@
                                     @if($dt->keterangan == 'DP')
                                         <span class="badge bg-info">{{$dt->keterangan}}</span>
                                     @endif
+                                    @if($dt->keterangan == 'Hanya DP')
+                                        <span class="badge bg-info">{{$dt->keterangan}}</span>
+                                    @endif
                                     @if($dt->keterangan == 'Di Batalkan Pelanggan' || $dt->keterangan == 'Di Batalkan Admin')
                                         <span class="badge bg-danger">X</span>
                                     @endif
@@ -78,6 +81,9 @@
                                     @endif
                                     @if($dt->keterangan == 'Expired')
                                         <span class="badge bg-danger">{{$dt->keterangan}}</span>
+                                    @endif
+                                    @if($dt->keterangan == 'Hanya DP')
+                                        <span class="badge bg-info">{{$dt->keterangan}}</span>
                                     @endif
                                 </td>
                                 <td>
