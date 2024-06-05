@@ -260,6 +260,13 @@ class AdminController extends Controller
             'lapangan_id' => 'required',
         ]);
 
+		$jam_mulai = strtotime($request->jam_mulai);
+		$jam_selesai = strtotime($request->jam_selesai);
+
+		if ($jam_selesai - $jam_mulai != 3600) {
+			return redirect()->back()->with('cekjam', '-');
+		}
+
 		Jam::create([
 			'jam_mulai' => $request->jam_mulai,
 			'jam_selesai' => $request->jam_selesai,
@@ -270,7 +277,14 @@ class AdminController extends Controller
 	}
 
 	public function update_jam(Request $request)
-	{
+	{	
+		$jam_mulai = strtotime($request->jam_mulai);
+		$jam_selesai = strtotime($request->jam_selesai);
+
+		if ($jam_selesai - $jam_mulai != 3600) {
+			return redirect()->back()->with('cekjam', '-');
+		}
+		
 		DB::table('jam')->where('id_jam', $request->id_jam)->update([
 			'jam_mulai' => $request->jam_mulai,
 			'jam_selesai' => $request->jam_selesai,

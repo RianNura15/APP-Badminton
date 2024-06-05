@@ -474,6 +474,17 @@
 </script>
 @endif
 
+@if(session('cekjam'))
+<script type="text/javascript">
+	document.getElementById('success');
+	Swal.fire({
+		icon: "warning",
+		title: "Harus 1 Jam",
+		text: "Jam yang di inputkan tidak sama dengan 1 jam",
+	});
+</script>
+@endif
+
 @if(session('pembayaran'))
 <script type="text/javascript">
 	document.getElementById('success');
