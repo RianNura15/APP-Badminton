@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Requests\LoginPelangganRequest;
@@ -706,17 +707,83 @@ class UserController extends Controller
 					->join('datauser', 'users.id', '=', 'datauser.user_id')
 					->where('users.id', Auth::user()->id)
 					->get();
-
-		return view('halaman/profil', compact('data'));
+		$disc = Diskon::where('nama_diskon', 'Member / Pelajar')->get();
+		return view('halaman/profil', compact('data', 'disc'));
 	}
 
-	public function daftarmember()
+	public function daftarmember(Request $request)
 	{
-		DB::table('users')->where('id', Auth::user()->id)->update([
-			'pengajuan_member' => '1',
-		]);
+		if ($request->hasFile('pas_foto') && !empty($request->file('pas_foto'))) {
+			$ambil = $request->file('pas_foto');
+			$name = $ambil->getClientOriginalName();
+			$namaFileBaru = uniqid();
+			$namaFileBaru .= $name;
+			$ambil->move(\base_path()."/public/pasfoto", $namaFileBaru);
+			$random_id = (string) Str::uuid();
+			$save = Datauser::where('user_id', Auth::user()->id)->update([
+				'pas_foto' => $namaFileBaru,		
+				'opsi_bayar' => $request->opsi_bayar,
+				'id_bayar' => $random_id,
+			]);
 
-		return redirect()->back()->with('daftarmember', '-');
+			if ($request->opsi_bayar == 'Online') {
+				\Midtrans\Config::$serverKey = config('midtrans.server_key');
+				// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+				\Midtrans\Config::$isProduction = true;
+				// Set sanitization on (default)
+				\Midtrans\Config::$isSanitized = true;
+				// Set 3DS transaction for credit card to true
+				\Midtrans\Config::$is3ds = true;
+				\Midtrans\Config::$overrideNotifUrl = config('app.url').'/api/member-callback';
+	
+				$params = array(
+					'transaction_details' => array(
+						'order_id' => $random_id,
+						'gross_amount' => $request->hargamember,
+					),
+					'customer_details' => array(
+						'first_name' => $request->name,
+						'last_name' => '',
+						'email' => $request->email,
+						'phone' => $request->phone,
+					),
+				);
+	
+				$snapToken = \Midtrans\Snap::getSnapToken($params);
+				Datauser::where('user_id', Auth::user()->id)->update([
+					'snap_token' => $snapToken,
+				]);
+			}
+
+			DB::table('users')->where('id', Auth::user()->id)->update([
+				'pengajuan_member' => '1',
+			]);
+			
+			return redirect()->back()->with('daftarmember', '-');
+		}
+	}
+
+	public function membercallback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
+		$cekPayment = Data_sewa::where('id_sewa', $request->order_id)->first();
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
+				$datauser = Datauser::where('id_bayar', $request->order_id)->update([
+					'status_bayar' => 'Terbayar',
+				]);
+            }
+        }
+    }
+
+	public function viewDaftarMember()
+	{
+		$data = DB::table('users')
+					->join('datauser', 'users.id', '=', 'datauser.user_id')
+					->where('users.id', Auth::user()->id)
+					->get();
+		return view('halaman/daftarmember', compact('data'));
 	}
 
 	public function lengkapi(ProfilRequest $request)
@@ -728,7 +795,7 @@ class UserController extends Controller
 			$namaFileBaru .= $name;
 			$ambil->move(\base_path()."/public/gambarktp", $namaFileBaru);
 			$save = DB::table('datauser')->where('user_id', Auth::user()->id)->update([
-				'username' => $request->username,
+				'username' => '-',
 				'no_telp' => $request->no_telp,
 				'jenis_kelamin' => $request->jenis_kelamin,
 				'ktp' => $request->ktp,
@@ -743,7 +810,7 @@ class UserController extends Controller
 			return redirect()->back()->with('lengkapi', '-');
 		} else {
 			DB::table('datauser')->where('user_id', Auth::user()->id)->update([
-				'username' => $request->username,
+				'username' => '-',
 				'no_telp' => $request->no_telp,
 				'jenis_kelamin' => $request->jenis_kelamin,
 				'ktp' => $request->ktp,

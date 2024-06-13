@@ -186,7 +186,8 @@ Route::group(['middleware' => ['auth','ceklevel:Pelanggan,Member']],function()
 	Route::get('user/data_sewa/cetak/{id_sewa}', [UserController::class, 'struk'])->name('struk');
 	Route::get('user/profil/', [UserController::class, 'profil'])->name('profil');
 	Route::post('user/profil/lengkapi', [UserController::class, 'lengkapi'])->name('lengkapi');
-	Route::get('user/profil/daftarmember', [UserController::class, 'daftarmember'])->name('daftarmember');
+	Route::post('user/profil/daftarmember', [UserController::class, 'daftarmember'])->name('daftarmember');
+	Route::get('user/daftarmember', [UserController::class, 'viewDaftarMember'])->name('viewDaftarMember');
 	Route::get('registermember', [HomeController::class, 'registermember'])->name('registermember');
 	Route::post('registermember/addreg', [HomeController::class, 'addregmember'])->name('addregmember');
 });

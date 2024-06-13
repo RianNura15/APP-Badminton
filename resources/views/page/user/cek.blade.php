@@ -6,46 +6,98 @@
     <a href="{{route('user')}}" class="btn btn-info">Kembali</a>
     </div>
     @foreach($user as $dt)
-        <div class="">
-            <div class="row">
-                <div class="col-md-6 col-offset-md-4">
+        <section id="multiple-column-form">
+            <div class="row match-height">
+                <div class="col-6">
                     <div class="card">
-                        <h5 class="card-header">Menyetujui Akun Untuk Menjadi Member</h5>
-                        <div class="card-body">
-                            <form action="{{route('gantilevel',$dt->id)}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <div class="">
-                                    <div class="row">
-                                        <h4 class="card-title">Nama : {{$dt->name}}</h4>
-                                        <h4 class="card-title">Email : {{$dt->email}}</h4>
-                                        <h4 class="card-title">Level : {{$dt->level}}</h4>
-                                        @if($dt->member == '0')
-                                        <h4 class="card-title">Member : <span class="badge bg-danger">Bukan Member</span></h4>
-                                        @endif
-                                        @if($dt->member == '1')
-                                        <h4 class="card-title">Level : <span class="badge bg-success">Member</span></h4>
-                                        @endif
-                                    </div>
-                                </div>
-                                @if($dt->member == '0' && $dt->pengajuan_member == '1')
-                                <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
-                                @endif
-                            </form>
-                        </div>
-                        <!-- <div class="card-body">
-                            <div class="form-group">
-                                <form class="form form-vertical" method="GET" action="{{route('bataluser',$dt->id)}}">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <h4 class="card-title">Menyetujui Akun Untuk Menjadi Member</h4>
+                                <form action="{{route('gantilevel', $dt->id)}}" method="GET" enctype="multipart/form-data">
                                     @csrf
-                                    @if($dt->cek=='1')
-                                    <button class="btn btn-sm btn-outline-danger form-control rounded-pill mt-4" onclick="return confirm('Yakin Akan Dibatalkan?')"> <i class="icon dripicons-document-edit"></i> Batalkan</button>
+                                    <div style="width: 100%; overflow-x: auto;">
+                                        <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                                            <tr style="display: flex; justify-content: space-between;">
+                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Nama</td>
+                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->name}}</td>
+                                            </tr>
+                                            <tr style="display: flex; justify-content: space-between;">
+                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Email</td>
+                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->email}}</td>
+                                            @if($dt->member == '0')
+                                                <tr style="display: flex; justify-content: space-between;">
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Member</td>
+                                                <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-danger">Bukan Member</span></td>
+                                                </tr>
+                                            @endif
+                                            @if($dt->member == '1')
+                                                <tr style="display: flex; justify-content: space-between;">
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Member</td>
+                                                <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-success">Member</span></td>
+                                                </tr>
+                                            @endif
+                                            @if($dt->opsi_bayar != NULL)
+                                            <tr style="display: flex; justify-content: space-between;">
+                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Pilihan Pembayaran</td>
+                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->opsi_bayar}}</td>
+                                            </tr>
+                                            @endif
+                                            @if($dt->jangka_waktu != NULL)
+                                            <tr style="display: flex; justify-content: space-between;">
+                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Jangka Waktu</td>
+                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->jangka_waktu}}</td>
+                                            </tr>
+                                            @endif
+                                            @if($dt->opsi_bayar == 'Online')
+                                                <tr style="display: flex; justify-content: space-between;">
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Status Pembayaran</td>
+                                                <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                                @if($dt->status_bayar == NULL)
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-danger">Belum Bayar</span></td>
+                                                @endif
+                                                @if($dt->status_bayar != NULL)
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-success">{{$dt->status_bayar}}</span></td>
+                                                @endif
+                                                </tr>
+                                            @endif
+                                        </table>
+                                    </div>
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1')
+                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
                                     @endif
                                 </form>
                             </div>
-                        </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <h4 class="card-title">Pas Foto</h4>
+                                <div>
+                                @foreach ($user as $dt)
+                                    @if($dt->pas_foto != NULL)
+                                    <p>
+                                        <img src="{{asset('pasfoto')}}/{{$dt->pas_foto}}" style="max-height: 220px; max-width: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
+                                    </p>
+                                    @else
+                                    <p></p>
+                                    @endif
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     @endforeach
     <section class="section">
         <div class="card">

@@ -45,8 +45,8 @@
                                     <td style="flex: 1; min-width: 100px; padding: 5px;">Keterangan</td>
                                     <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
                                     <td style="flex: 2; min-width: 150px; padding: 5px;">
-                                        @if($dt->data_jadwal->keterangan == 'Pending')
-                                            <span class="badge bg-warning">{{$dt->data_jadwal->keterangan}}</span>
+                                        @if($dt->data_jadwal->keterangan == '-')
+                                            <span class="badge bg-warning">Belum Bayar</span>
                                         @endif
                                         @if($dt->data_jadwal->keterangan == 'Aktif')
                                             <span class="badge bg-primary">{{$dt->data_jadwal->keterangan}}</span>

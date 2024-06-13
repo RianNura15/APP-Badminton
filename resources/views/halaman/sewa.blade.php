@@ -271,7 +271,7 @@
                             title: 'Success!',
                             text: 'Pembayaran Anda Berhasil!',
                             showConfirmButton: false,
-                            timer: 2000 // Durasi pesan (ms)
+                            timer: 4000 // Durasi pesan (ms)
                         }).then(() => {
                             window.location.href = '/user/data_sewa';
                         });

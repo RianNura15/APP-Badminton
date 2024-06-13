@@ -473,7 +473,10 @@ class AdminController extends Controller
 
 	public function validasiuser($id)
 	{
-		$user = User::where('users.id', $id)->get();
+		$user = DB::table('users')
+					->join('datauser', 'users.id', '=', 'datauser.user_id')
+					->where('users.id', $id)
+					->get();
 		$data = Data_sewa::with('nama_lapangan', 'data_jadwal')
 					->where('data_sewa.id_user', $id)
 					->latest()
@@ -483,9 +486,14 @@ class AdminController extends Controller
 	}
 
 	public function gantilevel($id, Request $request)
-	{
+	{	
+		$jangkawaktu = Carbon::now()->addYears(1)->format('Y-m-d H:i:s');
 		User::where('id', $id)->update([
 			'member' => '1',
+		]);
+
+		Datauser::where('user_id', $id)->update([
+			'jangka_waktu' => $jangkawaktu,
 		]);
 
 		return redirect()->back()->with('gantilevel', '-');

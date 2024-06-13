@@ -4,7 +4,7 @@
 	Swal.fire({
 		icon: "success",
 		title: "Pendaftaran Berhasil",
-		text: "Pendaftaran Sedang di Proses, Harap Tunggu dan Lihat di Halaman Profil Setelah Terkonfirmasi Oleh Admin!",
+		text: "Pendaftaran Berhasil, Segera Melakukan Pembayaran!",
 	});
 </script>
 @endif
