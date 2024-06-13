@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Bulan Mei 2024 pada 19.03
+-- Waktu pembuatan: 13 Jun 2024 pada 19.15
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -35,7 +35,13 @@ CREATE TABLE `datauser` (
   `jenis_kelamin` varchar(255) DEFAULT NULL,
   `ktp` varchar(255) DEFAULT NULL,
   `gambar_ktp` varchar(255) DEFAULT NULL,
+  `pas_foto` varchar(255) DEFAULT NULL,
   `alamat_penyewa` varchar(255) DEFAULT NULL,
+  `opsi_bayar` varchar(255) DEFAULT NULL,
+  `id_bayar` varchar(255) DEFAULT NULL,
+  `snap_token` varchar(255) DEFAULT NULL,
+  `status_bayar` varchar(255) DEFAULT NULL,
+  `jangka_waktu` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -44,23 +50,25 @@ CREATE TABLE `datauser` (
 -- Dumping data untuk tabel `datauser`
 --
 
-INSERT INTO `datauser` (`id_datauser`, `user_id`, `username`, `no_telp`, `jenis_kelamin`, `ktp`, `gambar_ktp`, `alamat_penyewa`, `created_at`, `updated_at`) VALUES
-(1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 4, 'ariiiii', '0877665523677', 'Laki-Laki', '979879879719823', NULL, 'pare', NULL, NULL),
-(7, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 13, 'Arisucipto', '085344567283', 'Laki-Laki', '888877887878347', NULL, 'Kediri', NULL, NULL),
-(13, 17, 'mahen gokil', '087766273238', 'Laki-Laki', '8001246809035002', '62e805a5bcb86stock-vector-ktp-indonesia-id-card-1628461459.jpg', 'Trenggalek', NULL, NULL),
-(14, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, 23, 'lukmanhkm', '08989871135', 'Laki-Laki', '8800112364454001', '630236f49fa5cstock-vector-ktp-indonesia-id-card-1628461459.jpg', 'Jl. Tosaren 2 Kec. Pesantren Kota Kediri', NULL, NULL),
-(20, 24, 'mandynurk', '08877666556', 'Laki-Laki', '8800984367654891', '62e802de83fc7stock-vector-ktp-indonesia-id-card-1628461459.jpg', 'Warujayeng, Nganjuk', NULL, NULL),
-(21, 25, 'RianZzZ', '082244745603', 'Laki-Laki', '8002240108175007', '62f7b6d73d6c1stock-vector-ktp-indonesia-id-card-1628461459.jpg', 'Bendo Pare', NULL, NULL),
-(23, 27, 'Nura', '082244745603', 'Laki-Laki', '88299237878', '65bc586dc3528stock-vector-ktp-indonesia-id-card-1628461459.jpg', 'Bendo', NULL, NULL),
-(24, 28, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(25, 29, 'akbar', '082244745603', 'Laki-Laki', '9899788677565', '66385291a6dc4WhatsApp Image 2022-01-22 at 14.02.45.jpeg', 'Pare', NULL, NULL),
-(26, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(27, 31, 'annura', '082244745603', 'Laki-Laki', '9898882399823', '66449a8fbb051ktp.jpg', 'Pare', NULL, NULL);
+INSERT INTO `datauser` (`id_datauser`, `user_id`, `username`, `no_telp`, `jenis_kelamin`, `ktp`, `gambar_ktp`, `pas_foto`, `alamat_penyewa`, `opsi_bayar`, `id_bayar`, `snap_token`, `status_bayar`, `jangka_waktu`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 4, 'ariiiii', '0877665523677', 'Laki-Laki', '979879879719823', NULL, NULL, 'pare', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 13, 'Arisucipto', '085344567283', 'Laki-Laki', '888877887878347', NULL, NULL, 'Kediri', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 17, 'mahen gokil', '087766273238', 'Laki-Laki', '8001246809035002', '62e805a5bcb86stock-vector-ktp-indonesia-id-card-1628461459.jpg', NULL, 'Trenggalek', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 23, 'lukmanhkm', '08989871135', 'Laki-Laki', '8800112364454001', '630236f49fa5cstock-vector-ktp-indonesia-id-card-1628461459.jpg', NULL, 'Jl. Tosaren 2 Kec. Pesantren Kota Kediri', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, 24, 'mandynurk', '08877666556', 'Laki-Laki', '8800984367654891', '62e802de83fc7stock-vector-ktp-indonesia-id-card-1628461459.jpg', NULL, 'Warujayeng, Nganjuk', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 25, 'RianZzZ', '082244745603', 'Laki-Laki', '8002240108175007', '62f7b6d73d6c1stock-vector-ktp-indonesia-id-card-1628461459.jpg', NULL, 'Bendo Pare', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 27, 'Nura', '082244745603', 'Laki-Laki', '88299237878', '65bc586dc3528stock-vector-ktp-indonesia-id-card-1628461459.jpg', NULL, 'Bendo', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, 28, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 29, 'akbar', '082244745603', 'Laki-Laki', '9899788677565', '6649c1babeaa5ktpvektor.jpg', '666b17685a3c2rian.jpeg', 'Pare', 'Online', '457af789-b188-43d7-b65d-9927995d1a49', 'cd02b5f5-4175-42f9-b50e-a372704d85cc', 'Terbayar', '2025-06-13 23:00:41', NULL, '2024-06-13 16:00:41'),
+(26, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(27, 31, 'annura', '082244745603', 'Laki-Laki', '9898882399823', '66449a8fbb051ktp.jpg', NULL, 'Pare', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 32, 'kalimasada', '087762389723', 'Laki-Laki', '8879789887983', '665de2d16843cktpvektor.jpg', NULL, 'Pare, Kediri', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 33, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -163,8 +171,13 @@ INSERT INTO `data_jadwal` (`id_jadwal`, `id_datasewa`, `id_lap`, `hari`, `expire
 (73, 73, 5, 'Hari 1', '20:29:45', '2024-05-18', '22:00:00', '23:00:00', 'Expired', '0', '2024-05-18 13:26:45', '2024-05-18 13:30:04'),
 (74, 74, 5, 'Hari 1', '20:37:48', '2024-05-18', '22:00:00', '23:00:00', 'Expired', '0', '2024-05-18 13:34:48', '2024-05-18 13:38:03'),
 (75, 75, 5, 'Hari 1', '20:55:43', '2024-05-18', '22:00:00', '23:00:00', 'Expired', '0', '2024-05-18 13:52:43', '2024-05-18 13:56:02'),
-(76, 76, 5, 'Hari 1', '21:38:43', '2024-05-19', '12:00:00', '14:00:00', 'Aktif', '1', '2024-05-18 14:35:43', '2024-05-18 14:36:10'),
-(77, 77, 12, 'Hari 1', '23:40:15', '2024-05-19', '14:00:00', '16:00:00', 'Aktif', '1', '2024-05-18 16:37:15', '2024-05-18 16:38:09');
+(76, 76, 5, 'Hari 1', '21:38:43', '2024-05-19', '12:00:00', '14:00:00', 'Selesai', '0', '2024-05-18 14:35:43', '2024-05-19 07:00:02'),
+(77, 77, 12, 'Hari 1', '23:40:15', '2024-05-19', '14:00:00', '16:00:00', 'Selesai', '0', '2024-05-18 16:37:15', '2024-05-19 09:00:03'),
+(78, 78, 12, 'Hari 1', '14:59:03', '2024-05-19', '16:00:00', '18:00:00', 'Expired', '0', '2024-05-19 07:56:04', '2024-05-19 08:00:02'),
+(79, 79, 11, 'Hari 1', '11:48:06', '2024-06-03', '18:00:00', '20:00:00', 'Hanya DP', '0', '2024-06-03 04:45:06', '2024-06-03 05:50:58'),
+(80, 80, 14, 'Hari 1', '22:45:25', '2024-06-05', '08:00:00', '12:00:00', 'Selesai', '0', '2024-06-03 15:42:25', '2024-06-05 05:00:02'),
+(81, 81, 5, 'Hari 1', '12:23:53', '2024-06-10', '13:00:00', '14:00:00', 'Selesai', '1', '2024-06-10 05:20:53', '2024-06-10 05:22:12'),
+(82, 82, 5, 'Hari 1', '23:29:23', '2024-06-14', '13:00:00', '14:00:00', 'Aktif', '1', '2024-06-13 16:26:23', '2024-06-13 16:28:38');
 
 -- --------------------------------------------------------
 
@@ -300,7 +313,12 @@ INSERT INTO `data_sewa` (`id_sewa`, `id_user`, `lap_id`, `id_payment`, `namapb`,
 (74, 25, 5, 2, 'PB Merak', '2024-05-18', '20:37:48', 'Expired', 10, 'Belum di Bayar', 0, '08e4dc55-8dde-4204-94d2-c5375ba2ffd1', '2024-05-18 13:34:48', '2024-05-18 13:38:01'),
 (75, 25, 5, 2, 'Cobaaaa', '2024-05-18', '20:55:43', 'Expired', 10, 'Belum di Bayar', 0, 'bf1b0798-3cd5-42f6-b76c-6a0b78737401', '2024-05-18 13:52:43', '2024-05-18 13:56:00'),
 (76, 25, 5, 2, 'PB Kencana', '2024-05-18', '21:38:43', 'Clear', 10, 'Terbayar', 0, '5c6e6a5b-c70f-4f60-a66e-6445d2d95f6e', '2024-05-18 14:35:43', '2024-05-18 14:36:10'),
-(77, 25, 12, 2, 'PB Kudus', '2024-05-18', '23:40:15', 'Clear', 10, 'Terbayar', 0, 'dbdaf45a-c765-4e32-980c-23912ff12f6a', '2024-05-18 16:37:15', '2024-05-18 16:38:09');
+(77, 25, 12, 2, 'PB Kudus', '2024-05-18', '23:40:15', 'Clear', 10, 'Terbayar', 0, 'dbdaf45a-c765-4e32-980c-23912ff12f6a', '2024-05-18 16:37:15', '2024-05-18 16:38:09'),
+(78, 25, 12, 2, 'Cobaaa', '2024-05-19', '14:59:03', 'Expired', 20, 'Belum di Bayar', 0, 'ca1fed68-f332-439e-8097-5b05d16efd5a', '2024-05-19 07:56:03', '2024-05-19 08:00:01'),
+(79, 25, 11, 1, 'PB Surabaya', '2024-06-03', '11:48:06', 'Hanya DP', 20, 'DP Terbayar', 4, 'cb73c2d4-9697-4ab5-baf7-45f33d339c2c', '2024-06-03 04:45:06', '2024-06-03 05:50:58'),
+(80, 32, 14, 2, 'PB Martapura', '2024-06-03', '22:45:25', 'Clear', 40, 'Terbayar', 0, 'f2d1d11c-c456-4efe-a655-25bb78e9e694', '2024-06-03 15:42:25', '2024-06-03 15:44:38'),
+(81, 29, 5, 2, 'PB Polinema', '2024-06-10', '12:23:53', 'Clear', 10, 'Terbayar', 0, '398c14dd-4b8b-48d8-82f3-73fc2044ec75', '2024-06-10 05:20:53', '2024-06-10 05:22:12'),
+(82, 29, 5, 2, 'PB Sanjaya', '2024-06-13', '23:29:23', 'Clear', 5, 'Terbayar', 0, '41c9588c-e4e8-4c72-afd6-3bf357a03354', '2024-06-13 16:26:23', '2024-06-13 16:28:38');
 
 -- --------------------------------------------------------
 
@@ -444,7 +462,23 @@ INSERT INTO `jam` (`id_jam`, `lapangan_id`, `jam_mulai`, `jam_selesai`, `created
 (90, 13, '19:00:00', '20:00:00', '2024-03-02 17:22:19', '2024-03-02 17:22:19'),
 (91, 13, '20:00:00', '21:00:00', '2024-03-02 17:22:19', '2024-03-02 17:22:19'),
 (92, 13, '21:00:00', '22:00:00', '2024-03-02 17:22:26', '2024-03-02 17:22:26'),
-(93, 13, '22:00:00', '23:00:00', '2024-03-02 17:23:16', '2024-03-02 17:23:16');
+(93, 13, '22:00:00', '23:00:00', '2024-03-02 17:23:16', '2024-03-02 17:23:16'),
+(94, 14, '08:00:00', '09:00:00', '2024-06-03 15:15:08', '2024-06-03 15:15:08'),
+(95, 14, '09:00:00', '10:00:00', '2024-06-03 15:37:12', '2024-06-03 15:37:12'),
+(96, 14, '10:00:00', '11:00:00', '2024-06-03 15:37:22', '2024-06-03 15:37:22'),
+(97, 14, '11:00:00', '12:00:00', '2024-06-03 15:37:30', '2024-06-03 15:37:30'),
+(98, 14, '12:00:00', '13:00:00', '2024-06-03 15:37:37', '2024-06-03 15:37:37'),
+(99, 14, '13:00:00', '14:00:00', '2024-06-03 15:37:45', '2024-06-03 15:37:45'),
+(100, 14, '14:00:00', '15:00:00', '2024-06-03 15:37:51', '2024-06-03 15:37:51'),
+(101, 14, '15:00:00', '16:00:00', '2024-06-03 15:37:59', '2024-06-03 15:37:59'),
+(102, 14, '16:00:00', '17:00:00', '2024-06-03 15:38:07', '2024-06-03 15:38:07'),
+(103, 14, '17:00:00', '18:00:00', '2024-06-03 15:38:13', '2024-06-03 15:38:13'),
+(104, 14, '18:00:00', '19:00:00', '2024-06-03 15:38:18', '2024-06-03 15:38:18'),
+(105, 14, '19:00:00', '20:00:00', '2024-06-03 15:38:28', '2024-06-03 15:38:28'),
+(106, 14, '20:00:00', '21:00:00', '2024-06-03 15:38:36', '2024-06-03 15:38:36'),
+(107, 14, '21:00:00', '22:00:00', '2024-06-03 15:38:42', '2024-06-03 15:38:42'),
+(108, 14, '22:00:00', '23:00:00', '2024-06-03 15:39:06', '2024-06-03 15:39:06'),
+(109, 15, '08:00:00', '09:00:00', '2024-06-05 01:55:05', '2024-06-05 01:55:05');
 
 -- --------------------------------------------------------
 
@@ -553,7 +587,9 @@ INSERT INTO `nama_lapangan` (`id_lapangan`, `nama_lap`, `jenis_id`, `harga_pagi`
 (5, 'Lapangan Bulutangkis', 1, 10, 15, '6642fac6d567clap 1.jpg', 'Bulutangkis', 'Penerangan Bagus, Lapangan Bagus, Ukuran Memenuhi Standart', NULL, NULL),
 (11, 'Lapangan Bulutangkis 2', 1, 10, 15, '6642fad06a67elap 2.jpg', 'Bulutangkis', 'Lapangan Standard Nasional', NULL, NULL),
 (12, 'Lapangan Bulutangkis 3', 1, 10, 15, '6642fadd52c97lap 3.jpeg', 'Bulutangkis', 'Lapangan Standard Nasional', NULL, NULL),
-(13, 'Lapangan Bulutangkis 4', 1, 10, 15, '6642fae5aa66clap 4.jpg', 'Bulutangkis', 'Lapangan Standard Nasional', NULL, NULL);
+(13, 'Lapangan Bulutangkis 4', 1, 10, 15, '6642fae5aa66clap 4.jpg', 'Bulutangkis', 'Lapangan Standard Nasional', NULL, NULL),
+(14, 'Lapangan Bulutangkis 5', 1, 10, 15, '665ddae76189clap 5.jpg', 'Bulutangkis', 'Lapangan Bulutangkis berkualitas dengan standard internasional', NULL, NULL),
+(15, 'Lapangan Bulutangkis 6', 1, 10, 15, '665fbe57e31b6lap 6.jpg', 'Bulutangkis', 'Lapangan Bulutangkis berkualitas dengan standard internasional', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -586,7 +622,7 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id_payment`, `metode_payment`, `dp`, `created_at`, `updated_at`) VALUES
-(1, 'Bayar di Tempat', 0.20, NULL, '2024-03-14 14:20:42'),
+(1, 'Bayar di Tempat', 0.20, NULL, '2024-06-03 15:40:15'),
 (2, 'Bayar Online', 0.00, NULL, '2024-03-11 04:44:47');
 
 -- --------------------------------------------------------
@@ -634,7 +670,11 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `sewa_id`, `nominal`, `tanggal`, `sta
 (22, 71, '10.00', '2024-05-18', 'Lunas', '2024-05-18 03:26:32', '2024-05-18 03:26:32'),
 (23, 72, '10.00', '2024-05-18', 'Lunas', '2024-05-18 13:24:12', '2024-05-18 13:24:12'),
 (24, 76, '10.00', '2024-05-18', 'Lunas', '2024-05-18 14:36:10', '2024-05-18 14:36:10'),
-(25, 77, '10.00', '2024-05-18', 'Lunas', '2024-05-18 16:38:09', '2024-05-18 16:38:09');
+(25, 77, '10.00', '2024-05-18', 'Lunas', '2024-05-18 16:38:09', '2024-05-18 16:38:09'),
+(26, 79, '4', '2024-06-03', 'Hanya DP', '2024-06-03 05:50:58', '2024-06-03 05:50:58'),
+(27, 80, '40.00', '2024-06-03', 'Lunas', '2024-06-03 15:44:38', '2024-06-03 15:44:38'),
+(28, 81, '10.00', '2024-06-10', 'Lunas', '2024-06-10 05:22:12', '2024-06-10 05:22:12'),
+(29, 82, '5.00', '2024-06-13', 'Lunas', '2024-06-13 16:28:38', '2024-06-13 16:28:38');
 
 -- --------------------------------------------------------
 
@@ -668,7 +708,8 @@ INSERT INTO `peralatan` (`id`, `nama`, `jumlah`, `tempat`, `deskripsi`, `gambar`
 (8, 'Botol Antiseptik', '1', 'Sebelah selatan di tiang net', 'Berbahan plastik berwarna putih', '63020273d2f04WhatsApp Image 2022-07-31 at 22.33.54 (1).jpeg', '2022-08-21 10:01:23', '2022-08-21 10:01:23'),
 (9, 'Meja', '3', 'Didalam dan diluar ruangan', 'Berbahan Kayu Berwarna Coklat', '630202ae6e88cWhatsApp Image 2022-07-31 at 22.33.51.jpeg', '2022-08-21 10:02:22', '2022-08-21 10:02:22'),
 (10, 'Meja Besar', '1', 'Sebelah Timur Pojok Ruangan', 'Berbahan kayu berwarna coklat', '630202e28e469WhatsApp Image 2022-07-31 at 22.33.50 (1).jpeg', '2022-08-21 10:03:14', '2022-08-21 10:03:14'),
-(11, 'Papan Jadwal', '1', 'Tembok Sebelah Utara', 'Berwarna Putih', '63020336723ebWhatsApp Image 2022-07-31 at 22.33.53 (2).jpeg', '2022-08-21 10:04:38', '2022-08-21 10:04:38');
+(11, 'Papan Jadwal', '1', 'Tembok Sebelah Utara', 'Berwarna Putih', '63020336723ebWhatsApp Image 2022-07-31 at 22.33.53 (2).jpeg', '2022-08-21 10:04:38', '2022-08-21 10:04:38'),
+(12, 'Kemoceng', '5', 'Di samping jendela', 'berarna abu - abu', '665ddfbd164e4images.jpeg', '2024-06-03 15:22:37', '2024-06-03 15:22:37');
 
 -- --------------------------------------------------------
 
@@ -750,9 +791,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `le
 (25, 'Rian Nura Ari Sucipto', 'rian@gmail.com', NULL, '$2y$10$ubgTcwJzUXh5bO/fsUpZ8OBxjsj0WLz2BXWVzhv1FydiEcT1GmGue', 'Pelanggan', 'Aktif', 1, 1, NULL, '2022-08-13 14:34:42', '2024-03-01 13:02:01'),
 (27, 'Nura', 'nura@gmail.com', NULL, '$2y$10$aixQLjn8Vs1ATpOBU5o0cOevquqZBp/6sIzYIZGRk3jwD0BhK/mdS', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-02-02 02:45:57', '2024-02-02 02:45:57'),
 (28, 'nyoba', 'nyoba@gmail.com', NULL, '$2y$10$0f8k9CAez8oBC1cZd2n6quE3Hj/boOimwr1zpiQKCEsDhz5UjJZKO', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-02-29 06:18:48', '2024-02-29 06:18:48'),
-(29, 'Muhammad Akbar', 'akbar@gmail.com', NULL, '$2y$10$lYl.mTdFUc3oxJyHMnKIseSPURm5PDzTgNa/xRS0rCIky9wOKr.gi', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-06 03:44:51', '2024-05-06 03:44:51'),
+(29, 'Muhammad Akbar', 'akbar@gmail.com', NULL, '$2y$10$lYl.mTdFUc3oxJyHMnKIseSPURm5PDzTgNa/xRS0rCIky9wOKr.gi', 'Pelanggan', 'Aktif', 1, 1, NULL, '2024-05-06 03:44:51', '2024-06-13 16:00:41'),
 (30, 'Anis', 'anis@gmail.com', NULL, '$2y$10$Uc5q5uhaZsyfhr8OA9KBJ.t6MVAlUtoW2ltmQdLVdKnxUbEm5p31S', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-06 03:45:17', '2024-05-06 03:45:17'),
-(31, 'AnNura', 'annura00015@gmail.com', NULL, '$2y$10$p2GzthQR9Nus7i7vQU6NV.CUxVd43GVjraj5bh9dEzA3H2uXrgbEy', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-15 11:18:12', '2024-05-15 11:18:12');
+(31, 'AnNura', 'annura00015@gmail.com', NULL, '$2y$10$p2GzthQR9Nus7i7vQU6NV.CUxVd43GVjraj5bh9dEzA3H2uXrgbEy', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-15 11:18:12', '2024-05-15 11:18:12'),
+(32, 'Muhammad Kalimasada', 'masada@gmail.com', NULL, '$2y$10$kQ43HulPVmm5pvjnyBHTOuEJsoZa2xVGfje9wddvIU8rJSYC0aC22', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-06-03 15:26:44', '2024-06-03 15:26:44'),
+(33, 'Rianis', 'rianis@gmail.com', NULL, '$2y$10$wy03GIYdMbR2qvwV3g1JaODgu2Zqd4Czg1v76Kbd.F4dPwwoOD6V6', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-06-13 07:50:58', '2024-06-13 07:50:58');
 
 --
 -- Indexes for dumped tables
@@ -894,13 +937,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `datauser`
 --
 ALTER TABLE `datauser`
-  MODIFY `id_datauser` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_datauser` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_jadwal`
 --
 ALTER TABLE `data_jadwal`
-  MODIFY `id_jadwal` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_jadwal` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_pb`
@@ -912,7 +955,7 @@ ALTER TABLE `data_pb`
 -- AUTO_INCREMENT untuk tabel `data_sewa`
 --
 ALTER TABLE `data_sewa`
-  MODIFY `id_sewa` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_sewa` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT untuk tabel `diskons`
@@ -936,7 +979,7 @@ ALTER TABLE `image_lapangan`
 -- AUTO_INCREMENT untuk tabel `jam`
 --
 ALTER TABLE `jam`
-  MODIFY `id_jam` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id_jam` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT untuk tabel `jenis_lapangan`
@@ -960,7 +1003,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `nama_lapangan`
 --
 ALTER TABLE `nama_lapangan`
-  MODIFY `id_lapangan` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_lapangan` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `payment`
@@ -972,13 +1015,13 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_pembayaran` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `peralatan`
 --
 ALTER TABLE `peralatan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -996,7 +1039,7 @@ ALTER TABLE `profil`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
