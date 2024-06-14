@@ -66,10 +66,20 @@
                                                 @endif
                                                 </tr>
                                             @endif
+                                            @if($dt->jml_jadimember != NULL)
+                                                <tr style="display: flex; justify-content: space-between;">
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Jadi Member</td>
+                                                <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->jml_jadimember}}x</td>
+                                                </tr>
+                                            @endif
                                         </table>
                                     </div>
-                                    @if($dt->member == '0' && $dt->pengajuan_member == '1')
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember == NULL)
                                     <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
+                                    @endif
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember != NULL)
+                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui Perpanjangan</button>
                                     @endif
                                 </form>
                             </div>

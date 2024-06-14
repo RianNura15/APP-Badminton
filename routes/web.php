@@ -187,6 +187,7 @@ Route::group(['middleware' => ['auth','ceklevel:Pelanggan,Member']],function()
 	Route::get('user/profil/', [UserController::class, 'profil'])->name('profil');
 	Route::post('user/profil/lengkapi', [UserController::class, 'lengkapi'])->name('lengkapi');
 	Route::post('user/profil/daftarmember', [UserController::class, 'daftarmember'])->name('daftarmember');
+	Route::post('user/profil/perpanjangmember', [UserController::class, 'perpanjangmember'])->name('perpanjangmember');
 	Route::get('user/daftarmember', [UserController::class, 'viewDaftarMember'])->name('viewDaftarMember');
 	Route::get('registermember', [HomeController::class, 'registermember'])->name('registermember');
 	Route::post('registermember/addreg', [HomeController::class, 'addregmember'])->name('addregmember');

@@ -488,12 +488,27 @@ class AdminController extends Controller
 	public function gantilevel($id, Request $request)
 	{	
 		$jangkawaktu = Carbon::now()->addYears(1)->format('Y-m-d H:i:s');
+		$datauser = Datauser::where('user_id', $id)->get();
+
 		User::where('id', $id)->update([
 			'member' => '1',
 		]);
 
+		foreach ($datauser as $dt) {
+			if ($dt->jml_jadimember != NULL) {
+				Datauser::where('user_id', $id)->update([
+					'jml_jadimember' => intval($dt->jml_jadimember) + 1,
+				]);
+			} else {
+				Datauser::where('user_id', $id)->update([
+					'jml_jadimember' => 1,
+				]);
+			}
+		}
+
 		Datauser::where('user_id', $id)->update([
 			'jangka_waktu' => $jangkawaktu,
+			'status_bayar' => 'Terbayar',
 		]);
 
 		return redirect()->back()->with('gantilevel', '-');

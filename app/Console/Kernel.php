@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\MulaiCommand',
         'App\Console\Commands\SelesaiCommand',
         'App\Console\Commands\ExpjadwalCommand',
+        'App\Console\Commands\ExpMemberCommand',
     ];
 
     protected function schedule(Schedule $schedule)
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('jadwal:mulai')->everyMinute();
         $schedule->command('jadwal:selesai')->everyMinute();
         $schedule->command('jadwal:exp')->everyMinute();
+        $schedule->command('member:exp')->everyMinute();
     }
 
     /**

@@ -703,12 +703,19 @@ class UserController extends Controller
 	
 	public function profil()
 	{
+		$datenow = Carbon::parse()->toDateString();
 		$data = DB::table('users')
 					->join('datauser', 'users.id', '=', 'datauser.user_id')
 					->where('users.id', Auth::user()->id)
 					->get();
+					
+		foreach ($data as $dt) {
+			$diffInDays = Carbon::parse($dt->updated_at)->toDateString();
+			$paymentDueDate = Carbon::parse($dt->jangka_waktu)->subDays(3)->toDateString();
+		}
+
 		$disc = Diskon::where('nama_diskon', 'Member / Pelajar')->get();
-		return view('halaman/profil', compact('data', 'disc'));
+		return view('halaman/profil', compact('data', 'disc', 'datenow' , 'diffInDays', 'paymentDueDate'));
 	}
 
 	public function daftarmember(Request $request)
@@ -761,6 +768,55 @@ class UserController extends Controller
 			
 			return redirect()->back()->with('daftarmember', '-');
 		}
+	}
+	
+	public function perpanjangmember(Request $request)
+	{
+		$random_id = (string) Str::uuid();
+
+		$datauser = Datauser::where('user_id', Auth::user()->id)->get();
+		$user = User::where('id', Auth::user()->id)->get();
+
+		Datauser::where('user_id', Auth::user()->id)->update([		
+			'opsi_bayar' => $request->opsi_bayar,
+			'id_bayar' => $random_id,
+			'status_bayar' => NULL,
+			'jangka_waktu' => NULL,
+		]);
+
+		\Midtrans\Config::$serverKey = config('midtrans.server_key');
+		// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+		\Midtrans\Config::$isProduction = true;
+		// Set sanitization on (default)
+		\Midtrans\Config::$isSanitized = true;
+		// Set 3DS transaction for credit card to true
+		\Midtrans\Config::$is3ds = true;
+		\Midtrans\Config::$overrideNotifUrl = config('app.url').'/api/member-callback';
+
+		$params = array(
+			'transaction_details' => array(
+				'order_id' => $random_id,
+				'gross_amount' => $request->hargamember,
+			),
+			'customer_details' => array(
+				'first_name' => $request->name,
+				'last_name' => '',
+				'email' => $request->email,
+				'phone' => $request->phone,
+			),
+		);
+
+		$snapToken = \Midtrans\Snap::getSnapToken($params);
+		Datauser::where('user_id', Auth::user()->id)->update([
+			'snap_token' => $snapToken,
+		]);
+
+		DB::table('users')->where('id', Auth::user()->id)->update([
+			'pengajuan_member' => '1',
+			'member' => '0',
+		]);
+		
+		return redirect()->back()->with('perpanjangmember', '-');
 	}
 
 	public function membercallback(Request $request)

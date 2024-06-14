@@ -41,7 +41,7 @@
                     <div class="alert alert-light-danger color-danger"><i
                         class="bi bi-exclamation-circle"></i> Isi data diri kamu dengan benar, bila melakukan manipulasi data akun akan di nonaktifkan
                     </div>
-                    @if (auth()->user()->member == '1')
+                    @if (auth()->user()->member == '1' && $diffInDays == $datenow)
                     <div class="alert alert-light-success color-success"><i
                         class="bi bi-exclamation-circle"></i> Selamat, Kamu sudah menjadi member, nikmati keuntungannya!
                     </div>
@@ -62,14 +62,24 @@
                                 <i class="icon dripicons-document-edit"></i> Edit
                             </button>
                             @endif
-                            @if($dt->pengajuan_member == 0 && $dt->member == 0 || $dt->pengajuan_member == 1 && $dt->member == 0)
+                            @if($dt->pengajuan_member == 0 && $dt->member == 0 && $dt->jml_jadimember == NULL || $dt->pengajuan_member == 1 && $dt->member == 0 && $dt->jml_jadimember == NULL)
                             <button type="button" class="btn rounded-pill btn-md btn-primary block" style="float: right; margin-right: 5px;" data-bs-toggle="modal" data-bs-target="#daftar{{Auth::user()->id}}">
                                 <i class="dripicons dripicons-direction"></i> Daftar Member
                             </button>
                             @endif
-                            @if($dt->opsi_bayar == 'Online' && $dt->status_bayar == NULL && $dt->pengajuan_member == '1' && $dt->member == '0')
+                            @if($dt->pengajuan_member == 0 && $dt->member == 0 && $dt->jml_jadimember != NULL || $dt->pengajuan_member == 1 && $dt->member == 1 && $dt->jml_jadimember != NULL && $datenow >= $paymentDueDate)
+                            <button type="button" class="btn rounded-pill btn-md btn-primary block" style="float: right; margin-right: 5px;" data-bs-toggle="modal" data-bs-target="#perpanjang{{Auth::user()->id}}">
+                                <i class="dripicons dripicons-direction"></i> Perpanjangan Member
+                            </button>
+                            @endif
+                            @if($dt->opsi_bayar == 'Online' && $dt->status_bayar == NULL && $dt->pengajuan_member == '1' && $dt->member == '0' && $dt->jml_jadimember == NULL)
                             <button type="button" class="btn rounded-pill btn-md btn-success block pay-button" style="float: right; margin-right: 5px;" data-snap-token="{{$dt->snap_token}}" data-id="{{$dt->id_bayar}}">
                                 <i class="dripicons dripicons-browser-upload"></i> Bayar Member
+                            </button>
+                            @endif
+                            @if($dt->opsi_bayar == 'Online' && $dt->status_bayar == NULL && $dt->pengajuan_member == '1' && $dt->member == '0' && $dt->jml_jadimember != NULL)
+                            <button type="button" class="btn rounded-pill btn-md btn-success block pay-button" style="float: right; margin-right: 5px;" data-snap-token="{{$dt->snap_token}}" data-id="{{$dt->id_bayar}}">
+                                <i class="dripicons dripicons-browser-upload"></i> Bayar Perpanjangan Member
                             </button>
                             @endif
                             @endforeach
@@ -114,11 +124,40 @@
                                             <td>:</td>
                                             <td>{{$cst->alamat_penyewa}}</td>
                                         </tr>
+                                        @if($cst->member == 1)
                                         <tr>
-                                            <td>Jangka Waktu Member</td>
+                                            <td>JANGKA WAKTU MEMBER</td>
                                             <td>:</td>
                                             <td>{{ \Carbon\Carbon::parse($cst->jangka_waktu)->diffForHumans() }}</td>
                                         </tr>
+                                        @endif
+                                        <tr>
+                                            <td>STATUS MEMBER</td>
+                                            <td>:</td>
+                                            @if($cst->member == 1)
+                                            <td><span class="badge bg-success">Member</span></td>
+                                            @else
+                                            <td><span class="badge bg-danger">Bukan Member</span></td>
+                                            @endif
+                                        </tr>
+                                        @if($cst->pengajuan_member == 1 && $cst->member == 0)
+                                        <tr>
+                                            <td>STATUS PEMBAYARAN MEMBER</td>
+                                            <td>:</td>
+                                            @if($cst->status_bayar == 'Terbayar')
+                                            <td><span class="badge bg-success">Terbayar</span></td>
+                                            @else
+                                            <td><span class="badge bg-danger">Belum di Bayar</span></td>
+                                            @endif
+                                        </tr>
+                                        @endif
+                                        @if($cst->jml_jadimember != NULL)
+                                        <tr>
+                                            <td>JADI MEMBER</td>
+                                            <td>:</td>
+                                            <td>{{$cst->jml_jadimember}}x</td>
+                                        </tr>
+                                        @endif
                                         <div class="modal fade text-left" id="inlineForm{{Auth::user()->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
                                             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
                                                 <div class="modal-content" style="border-bottom:1px solid blue;">
@@ -304,6 +343,61 @@
                                                             </button>
                                                         </div>
                                                         @endif
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade text-left" id="perpanjang{{Auth::user()->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                                            role="document">
+                                                <div class="modal-content" style="border-bottom:1px solid blue;">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel33">PERPANJANG MEMBER</h4>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                    <form method="post" action="{{route('perpanjangmember')}}" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="form-group">
+                                                                    <p style="color: red;">
+                                                                        note : 
+                                                                    </p>
+                                                                    <p>
+                                                                        ◽ Pilihlah opsi pembayaran yang sesuai <br>
+                                                                        ◽ Setelah perpanjang dan membayar, tunggu konfirmasi dari admin, hasil konfirmasi dapat dilihat di menu profil <br>
+                                                                        ◽ Jika pembayaran secara online tidak bisa / expired silahkan membayar secara offline.
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label>Opsi Pembayaran: </label>
+                                                                    <div class="form-group">
+                                                                        <select class="choices form-select" name="opsi_bayar" required>
+                                                                            <option <?php if($cst->opsi_bayar == "Offline"){echo "selected";}?> value="Offline">Offline</option>
+                                                                            <option <?php if($cst->opsi_bayar == "Online"){echo "selected";}?> value="Online">Online</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" name="name" value="{{Auth::user()->name}}">
+                                                                <input type="hidden" name="email" value="{{Auth::user()->email}}">
+                                                                <input type="hidden" name="phone" value="{{$cst->no_telp}}">
+                                                                <input type="hidden" name="hargamember" value="1">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">Kembali</span>
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary ml-1" onclick="return confirm('Yakin Mendaftar Menjadi Member?')">
+                                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Perpanjang</span>
+                                                            </button>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>

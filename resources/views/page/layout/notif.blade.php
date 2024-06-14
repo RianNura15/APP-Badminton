@@ -8,6 +8,16 @@
 	});
 </script>
 @endif
+@if(session('perpanjangmember'))
+<script type="text/javascript">
+	document.getElementById('success');
+	Swal.fire({
+		icon: "success",
+		title: "Perpanjangan Berhasil",
+		text: "Perpanjangan Berhasil, Segera Melakukan Pembayaran!",
+	});
+</script>
+@endif
 @if(session('salahprofil'))
 <script type="text/javascript">
 	document.getElementById('error');
