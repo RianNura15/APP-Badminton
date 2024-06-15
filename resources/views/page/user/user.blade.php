@@ -29,6 +29,7 @@
                             <th>KTP</th>
                             <th>Status</th>
                             <th>Member</th>
+                            <th>Perpanjangan Member</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -62,6 +63,14 @@
                                     @endif
                                     @if($dt->member == '1' && $dt->pengajuan_member == '1')
                                         <span class="badge bg-success">Member</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($dt->setuju_admin == 0)
+                                        <span class="badge bg-info">Tidak Ada</span>
+                                    @endif
+                                    @if($dt->setuju_admin == 1)
+                                        <span class="badge bg-warning">Diajukan</span>
                                     @endif
                                 </td>
                                 <td align="center">

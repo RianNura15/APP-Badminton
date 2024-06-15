@@ -488,6 +488,7 @@ class AdminController extends Controller
 	public function gantilevel($id, Request $request)
 	{	
 		$jangkawaktu = Carbon::now()->addYears(1)->format('Y-m-d H:i:s');
+		$pengingat = Carbon::parse($jangkawaktu)->subDays(3)->format('Y-m-d H:i:s');
 		$datauser = Datauser::where('user_id', $id)->get();
 
 		User::where('id', $id)->update([
@@ -508,7 +509,9 @@ class AdminController extends Controller
 
 		Datauser::where('user_id', $id)->update([
 			'jangka_waktu' => $jangkawaktu,
+			'pengingat' => $pengingat,
 			'status_bayar' => 'Terbayar',
+			'setuju_admin' => 0,
 		]);
 
 		return redirect()->back()->with('gantilevel', '-');

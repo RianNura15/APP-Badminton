@@ -41,31 +41,32 @@
                                                 </tr>
                                             @endif
                                             @if($dt->opsi_bayar != NULL)
-                                            <tr style="display: flex; justify-content: space-between;">
-                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Pilihan Pembayaran</td>
-                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
-                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->opsi_bayar}}</td>
-                                            </tr>
-                                            @endif
-                                            @if($dt->jangka_waktu != NULL)
-                                            <tr style="display: flex; justify-content: space-between;">
-                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Jangka Waktu</td>
-                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
-                                            <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->jangka_waktu}}</td>
-                                            </tr>
-                                            @endif
-                                            @if($dt->opsi_bayar == 'Online')
                                                 <tr style="display: flex; justify-content: space-between;">
-                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Status Pembayaran</td>
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Pilihan Pembayaran</td>
                                                 <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
-                                                @if($dt->status_bayar == NULL)
-                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-danger">Belum Bayar</span></td>
-                                                @endif
-                                                @if($dt->status_bayar != NULL)
-                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-success">{{$dt->status_bayar}}</span></td>
-                                                @endif
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->opsi_bayar}}</td>
                                                 </tr>
                                             @endif
+                                            @if($dt->jangka_waktu != NULL)
+                                                <tr style="display: flex; justify-content: space-between;">
+                                                <td style="flex: 1; min-width: 100px; padding: 5px;">Jangka Waktu</td>
+                                                <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;">{{$dt->jangka_waktu}}</td>
+                                                </tr>
+                                            @endif
+                                            <tr style="display: flex; justify-content: space-between;">
+                                            <td style="flex: 1; min-width: 100px; padding: 5px;">Status Pembayaran</td>
+                                            <td style="flex: 0; min-width: 10px; padding: 5px;">:</td>	
+                                            @if($dt->status_bayar == NULL)
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-danger">Belum Bayar</span></td>
+                                            @endif
+                                            @if($dt->status_bayar == 'Terbayar')
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-success">{{$dt->status_bayar}}</span></td>
+                                            @endif
+                                            @if($dt->status_bayar == 'Perpanjangan Belum di Bayar')
+                                                <td style="flex: 2; min-width: 150px; padding: 5px;"><span class="badge bg-danger">{{$dt->status_bayar}}</span></td>
+                                            @endif
+                                            </tr>
                                             @if($dt->jml_jadimember != NULL)
                                                 <tr style="display: flex; justify-content: space-between;">
                                                 <td style="flex: 1; min-width: 100px; padding: 5px;">Jadi Member</td>
@@ -75,11 +76,11 @@
                                             @endif
                                         </table>
                                     </div>
-                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember == NULL)
-                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember == NULL && $dt->status_bayar == 'Terbayar')
+                                        <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
                                     @endif
-                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember != NULL)
-                                    <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui Perpanjangan</button>
+                                    @if($dt->setuju_admin == 1 && $dt->jml_jadimember != NULL)
+                                        <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui Perpanjangan</button>
                                     @endif
                                 </form>
                             </div>
@@ -94,9 +95,9 @@
                                 <div>
                                 @foreach ($user as $dt)
                                     @if($dt->pas_foto != NULL)
-                                    <p>
-                                        <img src="{{asset('pasfoto')}}/{{$dt->pas_foto}}" style="max-height: 220px; max-width: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
-                                    </p>
+                                        <p>
+                                            <img src="{{asset('pasfoto')}}/{{$dt->pas_foto}}" style="max-height: 220px; max-width: 220px; border: 5px solid #435EBE; border-radius: 10px;" class="img-fluid" alt="">
+                                        </p>
                                     @else
                                     <p></p>
                                     @endif
@@ -112,9 +113,9 @@
     <section class="section">
         <div class="card">
             @foreach($user as $dt)
-            <div class="card-header">
-                Data Transaksi <b>{{$dt->name}}</b>
-            </div>
+                <div class="card-header">
+                    Data Transaksi <b>{{$dt->name}}</b>
+                </div>
             @endforeach
             <div class="card-body">
                 <table class="table table-striped" id="table1">
