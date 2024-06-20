@@ -481,8 +481,9 @@ class AdminController extends Controller
 					->where('data_sewa.id_user', $id)
 					->latest()
 					->get();
+		$today = Carbon::parse()->toDateString();
 
-		return view('page/user/cek', ['data' => $data, 'user' => $user]);
+		return view('page/user/cek', ['data' => $data, 'user' => $user, 'today' => $today]);
 	}
 
 	public function gantilevel($id, Request $request)

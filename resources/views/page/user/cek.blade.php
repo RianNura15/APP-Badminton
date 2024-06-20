@@ -76,10 +76,10 @@
                                             @endif
                                         </table>
                                     </div>
-                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember == NULL && $dt->status_bayar == 'Terbayar')
+                                    @if($dt->member == '0' && $dt->pengajuan_member == '1' && $dt->jml_jadimember == NULL && $dt->status_bayar == 'Terbayar' || $dt->opsi_bayar == 'Online' && $dt->status_bayar == NULL && $today > $dt->updated_at)
                                         <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui</button>
                                     @endif
-                                    @if($dt->setuju_admin == 1 && $dt->jml_jadimember != NULL)
+                                    @if($dt->setuju_admin == 1 && $dt->jml_jadimember != NULL || $dt->opsi_bayar == 'Online' && $dt->status_bayar == 'Perpanjangan Belum di Bayar' && $today > $dt->updated_at)
                                         <button class="btn btn-sm btn-outline-primary form-control rounded-pill mt-4" onclick="return confirm('Yakin Menyetujui?')"> <i class="icon dripicons-document-edit"></i> Setujui Perpanjangan</button>
                                     @endif
                                 </form>

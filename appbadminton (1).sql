@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Jun 2024 pada 17.17
+-- Waktu pembuatan: 20 Jun 2024 pada 16.12
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -71,7 +71,7 @@ INSERT INTO `datauser` (`id_datauser`, `user_id`, `username`, `no_telp`, `jenis_
 (25, 29, 'akbar', '082244745603', 'Laki-Laki', '9899788677565', '6649c1babeaa5ktpvektor.jpg', '666d887978449rian.jpeg', 'Pare', 'Offline', '4c68b9db-6f9a-4aba-bf2c-a4ced565f425', 'e0d05d0e-5065-41fe-9576-6d1148939ad5', 'Terbayar', '2025-06-15 19:33:15', NULL, '2025-06-12 19:33:15', 3, 0, NULL, '2024-06-15 12:33:15'),
 (26, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (27, 31, 'annura', '082244745603', 'Laki-Laki', '9898882399823', '66449a8fbb051ktp.jpg', NULL, 'Pare', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(28, 32, 'kalimasada', '087762389723', 'Laki-Laki', '8879789887983', '665de2d16843cktpvektor.jpg', NULL, 'Pare, Kediri', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-14 14:46:14'),
+(28, 32, 'kalimasada', '087762389723', 'Laki-Laki', '8879789887983', '6649c1babeaa5ktpvektor.jpg', '667413c6e94e32023121302423086.jpg', 'Pare, Kediri', 'Online', 'fbdd985f-132d-47ff-97c8-3605c4765862', 'c6137b4b-c650-4022-a438-0c731d0fcb6d', 'Terbayar', '2025-06-20 18:50:28', NULL, '2025-06-17 18:50:28', 1, 0, NULL, '2024-06-20 11:50:28'),
 (29, 33, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -795,13 +795,13 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `le
 (22, 'Reza', 'reza@gmail.com', NULL, '$2y$10$OT3Unz/O1DzlDOAjRyonzuz7u59/jBzr2ClvUvD6nZZ09IAqv9dOO', 'Admin', 'Aktif', 0, 0, NULL, '2022-08-01 08:23:27', '2022-08-01 08:23:27'),
 (23, 'Muhammad Lukman Hakim', 'lukman@gmail.com', NULL, '$2y$10$tBnjOh6LI.Gvr49sf149y.VoT2/IeYttN5QtbiJ0BH4pHAt5AmLAO', 'Pelanggan', 'Aktif', 0, 0, NULL, '2022-08-01 08:52:01', '2022-08-01 08:52:01'),
 (24, 'M. Andy Nur Kautsar', 'andy@gmail.com', NULL, '$2y$10$6Xh/OyHicCIhmOGO2d0BTeIYA7Ggh/jsvhIUki3guptHGaV0zriKq', 'Pelanggan', 'Aktif', 0, 0, NULL, '2022-08-01 14:37:57', '2022-08-01 14:37:57'),
-(25, 'Rian Nura Ari Sucipto', 'rian@gmail.com', NULL, '$2y$10$ubgTcwJzUXh5bO/fsUpZ8OBxjsj0WLz2BXWVzhv1FydiEcT1GmGue', 'Pelanggan', 'Aktif', 1, 1, NULL, '2022-08-13 14:34:42', '2024-03-01 13:02:01'),
+(25, 'Rian Nura Ari Sucipto', 'rian@gmail.com', NULL, '$2y$10$ubgTcwJzUXh5bO/fsUpZ8OBxjsj0WLz2BXWVzhv1FydiEcT1GmGue', 'Pelanggan', 'Aktif', 0, 0, NULL, '2022-08-13 14:34:42', '2024-03-01 13:02:01'),
 (27, 'Nura', 'nura@gmail.com', NULL, '$2y$10$aixQLjn8Vs1ATpOBU5o0cOevquqZBp/6sIzYIZGRk3jwD0BhK/mdS', 'Pelanggan', 'Aktif', 1, 1, NULL, '2024-02-02 02:45:57', '2024-06-15 12:25:12'),
 (28, 'nyoba', 'nyoba@gmail.com', NULL, '$2y$10$0f8k9CAez8oBC1cZd2n6quE3Hj/boOimwr1zpiQKCEsDhz5UjJZKO', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-02-29 06:18:48', '2024-02-29 06:18:48'),
 (29, 'Muhammad Akbar', 'akbar@gmail.com', NULL, '$2y$10$lYl.mTdFUc3oxJyHMnKIseSPURm5PDzTgNa/xRS0rCIky9wOKr.gi', 'Pelanggan', 'Aktif', 1, 1, NULL, '2024-05-06 03:44:51', '2024-06-15 12:33:15'),
 (30, 'Anis', 'anis@gmail.com', NULL, '$2y$10$Uc5q5uhaZsyfhr8OA9KBJ.t6MVAlUtoW2ltmQdLVdKnxUbEm5p31S', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-06 03:45:17', '2024-05-06 03:45:17'),
 (31, 'AnNura', 'annura00015@gmail.com', NULL, '$2y$10$p2GzthQR9Nus7i7vQU6NV.CUxVd43GVjraj5bh9dEzA3H2uXrgbEy', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-05-15 11:18:12', '2024-05-15 11:18:12'),
-(32, 'Muhammad Kalimasada', 'masada@gmail.com', NULL, '$2y$10$kQ43HulPVmm5pvjnyBHTOuEJsoZa2xVGfje9wddvIU8rJSYC0aC22', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-06-03 15:26:44', '2024-06-14 14:46:14'),
+(32, 'Muhammad Kalimasada', 'masada@gmail.com', NULL, '$2y$10$kQ43HulPVmm5pvjnyBHTOuEJsoZa2xVGfje9wddvIU8rJSYC0aC22', 'Pelanggan', 'Aktif', 1, 1, NULL, '2024-06-03 15:26:44', '2024-06-20 11:50:28'),
 (33, 'Rianis', 'rianis@gmail.com', NULL, '$2y$10$wy03GIYdMbR2qvwV3g1JaODgu2Zqd4Czg1v76Kbd.F4dPwwoOD6V6', 'Pelanggan', 'Aktif', 0, 0, NULL, '2024-06-13 07:50:58', '2024-06-13 07:50:58');
 
 --

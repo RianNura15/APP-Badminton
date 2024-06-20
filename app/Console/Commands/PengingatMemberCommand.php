@@ -41,6 +41,7 @@ class PengingatMemberCommand extends Command
     public function handle()
     {
         $updatedMember = Datauser::where([
+            ['status_bayar', '=', 'Terbayar'],
             ['pengingat', '<', Carbon::now()->format('Y-m-d H:i:s')],
         ])->get();
 
